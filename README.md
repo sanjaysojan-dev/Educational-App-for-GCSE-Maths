@@ -1,4 +1,4 @@
-# educational_app_for_maths
+# Educational App for GCSE Maths
 
 A new Flutter Project for the development of MSc Software Engineering's final year project
 
