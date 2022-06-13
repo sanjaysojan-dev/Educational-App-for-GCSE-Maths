@@ -1,3 +1,4 @@
+import 'package:educational_app_for_maths/screens/home_screen.dart';
 import 'package:educational_app_for_maths/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.blueAccent,
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => HomeScreen()));
+        },
         child: const Text(
           "Login",
           textAlign: TextAlign.center,
