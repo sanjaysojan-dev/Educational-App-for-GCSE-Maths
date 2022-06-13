@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "161363092856",
+    "project_id": "educational-app-for-maths",
+    "storage_bucket": "educational-app-for-maths.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161363092856:android:217fd409e334e98e2e548d",
+        "android_client_info": {
+          "package_name": "com.example.educational_app_for_maths"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161363092856-2h8h9of9hguo9cgefe2lgk5uttmnfl0h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.educational_app_for_maths",
+            "certificate_hash": "dc300f1e9a207ab2c8b2b77dd82356eeb439a808"
+          }
+        },
+        {
+          "client_id": "161363092856-ulgei14b0hk6f9lti39f62iflouhn94p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaxtN2OyyID0RJKEgXl3m10E8DHQPoDJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161363092856-ulgei14b0hk6f9lti39f62iflouhn94p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
