@@ -32,8 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Text ("Name", style:  TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold),),
             SizedBox(height: 10 ,),
             Text ("Email", style:  TextStyle(color: Colors.black45, fontWeight: FontWeight.w500),),
-            SizedBox(height: 10,),
-            ActionChip(label: Text( "Logout", style: TextStyle(color:Colors.black45, fontWeight: FontWeight.bold),), onPressed: (){})
+            SizedBox(height: 15),
+            ActionChip(label: Text( "Logout", style: TextStyle(color:Colors.black45, fontWeight: FontWeight.bold),),
+                avatar: Icon(Icons.logout, color: Colors.black45,),
+                onPressed: (){})
 
           ]
         ),

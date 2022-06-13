@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
       color: Colors.blueAccent,
       child: MaterialButton(
         onPressed: () {
-          Navigator.push(context,
+          Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => HomeScreen()));
         },
         child: const Text(
