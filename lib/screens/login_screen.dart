@@ -1,3 +1,4 @@
+import 'package:educational_app_for_maths/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // form key - helps validating the email and password
-  //uniquely identifies a form
+  // uniquely identifies a form
   final _formKey = GlobalKey<FormState>();
 
   //controllers for editing email/password fields
@@ -83,7 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Container(
             color: Colors.white,
 
-
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
@@ -94,11 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
 
-                    SizedBox(
-                      height: 200,
-                      child: Image.asset(''
-                      , fit: BoxFit.contain
-                      )),
+                    // SizedBox(
+                    //   height: 200,
+                    //   child: Image.asset(''
+                    //   , fit: BoxFit.contain
+                    //   )),
                     SizedBox(height: 45),
                     email,
                     SizedBox(height: 25),
@@ -111,7 +111,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text("Don't have an account?"),
                         GestureDetector(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                          },
                           child: const Text(
                             "Signup",
                             style: TextStyle(
