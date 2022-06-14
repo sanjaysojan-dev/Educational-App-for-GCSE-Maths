@@ -1,5 +1,5 @@
-import 'package:educational_app_for_maths/screens/home_screen.dart';
-import 'package:educational_app_for_maths/screens/registration_screen.dart';
+import 'package:educational_app_for_maths/screens/HomeScreen.dart';
+import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
