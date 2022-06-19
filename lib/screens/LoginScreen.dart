@@ -3,6 +3,7 @@ import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -105,6 +106,15 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
+    final googleSignInButton =  SignInButton(
+      Buttons.Google,
+      onPressed: () {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+      },
+    );
+
+
+
 /* returns a scaffold in which creates body in which contains the
 *  the form with the email and password fields.
 *
@@ -155,7 +165,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 15),
                     loginButton,
-
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +183,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize:15),),
                         )
                       ],
-                    )
+                    ),
+                    SizedBox(height:30),
+                    googleSignInButton
                   ],
                 ),
               ),
