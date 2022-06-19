@@ -1,3 +1,4 @@
+import 'package:educational_app_for_maths/screens/ForgotPasswordScreen.dart';
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -141,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         GestureDetector(
                           onTap: (){
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                                MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
                           },
                           child: const Text(
                             "Forgot Password?",
