@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
           signIn(emailController.text, passwordController.text);
         },
         child: const Text(
-          "Login",
+          "LOGIN",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 15,

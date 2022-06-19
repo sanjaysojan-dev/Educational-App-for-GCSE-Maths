@@ -32,6 +32,22 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
+    final resetPasswordButton = Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.blueAccent,
+        child: MaterialButton(
+          onPressed: () {},
+          child: const Text(
+            'RESET PASSWORD ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          minWidth: MediaQuery.of(context).size.width,
+        ));
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -88,7 +104,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                       ],
                     ),
                     SizedBox(height: 15),
-                    email
+                    email,
+                    SizedBox(height: 15),
+                    resetPasswordButton
                   ],
                 ),
               ),
