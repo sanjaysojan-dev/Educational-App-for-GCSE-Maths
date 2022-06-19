@@ -134,8 +134,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     email,
                     SizedBox(height: 25),
                     password,
-                    SizedBox(height: 35),
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                          },
+                          child: const Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.w400,
+                                fontSize:15),),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 15),
                     loginButton,
+
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
