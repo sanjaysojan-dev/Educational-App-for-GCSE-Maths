@@ -3,6 +3,7 @@ import 'package:educational_app_for_maths/models/UserModel.dart';
 import 'package:educational_app_for_maths/screens/LoginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  final _googleSignIn = GoogleSignIn();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel userModel = UserModel();
 
@@ -68,7 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   Future<void> logout (BuildContext context) async {
-    await FirebaseAuth.instance.signOut();Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
+    await FirebaseAuth.instance.signOut();
+    await _googleSignIn.signOut();
+
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
     => LoginScreen()), (route) => false);
   }
 }

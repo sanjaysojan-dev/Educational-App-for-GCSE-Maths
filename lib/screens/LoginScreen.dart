@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,10 +21,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //controllers for editing email/password fields
   final TextEditingController emailController = new TextEditingController();
+
   final TextEditingController passwordController = new TextEditingController();
 
   final _auth = FirebaseAuth.instance;
-
+  final _googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      validator: (value){
-        if(value!.isEmpty){
+      validator: (value) {
+        if (value!.isEmpty) {
           return "Please enter your email";
         }
 
@@ -41,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
         // if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)){
         //   return "Please enter a valid email";
         // }
-
       },
       //validator: () {},
       onSaved: (value) {
@@ -60,19 +61,17 @@ class _LoginScreenState extends State<LoginScreen> {
       autofocus: false,
       obscureText: true,
       controller: passwordController,
-
-        validator: (value){
-
+      validator: (value) {
         RegExp regex = new RegExp(r'^.{6,}$');
 
-          if(value!.isEmpty){
-            return "Please enter your password";
-          }
+        if (value!.isEmpty) {
+          return "Please enter your password";
+        }
 
-          if (!regex.hasMatch(value)) {
-            return "Please enter valid password with minimum of\n 8 characters";
-          }
-        },
+        if (!regex.hasMatch(value)) {
+          return "Please enter valid password with minimum of\n 8 characters";
+        }
+      },
       onSaved: (value) {
         passwordController.text = value!;
       },
@@ -96,24 +95,20 @@ class _LoginScreenState extends State<LoginScreen> {
           "LOGIN",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 15,
-              color: Colors.white,
-              fontWeight:
-              FontWeight.bold),
+              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
       ),
     );
 
-    final googleSignInButton =  SignInButton(
+    final googleSignInButton = SignInButton(
       Buttons.Google,
       onPressed: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+        signInWithGoogle();
+
       },
     );
-
-
 
 /* returns a scaffold in which creates body in which contains the
 *  the form with the email and password fields.
@@ -125,17 +120,14 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Container(
             color: Colors.white,
-
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
                 key: _formKey,
                 child: Column(
-
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-
                     // SizedBox(
                     //   height: 200,
                     //   child: Image.asset(''
@@ -150,16 +142,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForgotPasswordScreen()));
                           },
                           child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.w400,
-                                fontSize:15),),
+                                fontSize: 15),
+                          ),
                         )
                       ],
                     ),
@@ -171,20 +167,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text("Don't have an account?"),
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => RegistrationScreen()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegistrationScreen()));
                           },
                           child: const Text(
                             "Signup",
                             style: TextStyle(
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.w400,
-                                fontSize:15),),
+                                fontSize: 15),
+                          ),
                         )
                       ],
                     ),
-                    SizedBox(height:30),
+                    SizedBox(height: 30),
                     googleSignInButton
                   ],
                 ),
@@ -196,19 +196,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
-  void signIn (String email, String password) async {
-
-    if (_formKey.currentState!.validate()){
-      await _auth.signInWithEmailAndPassword(email: email, password: password).then((uid) => {
-        Fluttertoast.showToast(msg: "Log in successful"), 
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()))
-      }).catchError((e){
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Log in successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomeScreen()))
+              })
+          .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });
     }
   }
 
-
-
+  void signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+        final AuthCredential authCredential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken);
+        await _auth.signInWithCredential(authCredential);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e!.message.toString());
+    }
+  }
 }
