@@ -1,5 +1,8 @@
+import 'package:educational_app_for_maths/screens/LoginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -10,8 +13,10 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
 
   final TextEditingController emailController = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
         borderRadius: BorderRadius.circular(30),
         color: Colors.blueAccent,
         child: MaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            passwordReset(emailController.text);
+          },
           child: const Text(
             'RESET PASSWORD ',
             textAlign: TextAlign.center,
@@ -116,4 +123,20 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
       ]),
     );
   }
+
+
+Future passwordReset (String email ) async {
+    if (_formKey.currentState!.validate()) {
+
+      try {
+        await _auth.sendPasswordResetEmail(email: email);
+        Fluttertoast.showToast(msg: "Password reset link sent");
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+
+      } on FirebaseAuthException catch (e) {
+        Fluttertoast.showToast(msg: e!.message.toString());
+      }
+    }
+}
+
 }
