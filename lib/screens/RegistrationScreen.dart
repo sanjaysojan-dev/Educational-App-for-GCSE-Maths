@@ -236,8 +236,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     userModel.email = user!.email;
     userModel.uid = user!.uid;
-    userModel.forename = forenameEditingController.text;
-    userModel.surname = surnameEditingController.text;
+    //userModel.forename = forenameEditingController.text;
+    //userModel.surname = surnameEditingController.text;
+
+    userModel.displayName = forenameEditingController.text +" "+surnameEditingController.text;
 
     await firebaseFirestore.collection("users")
         .doc(user.uid).set(userModel.toMap());

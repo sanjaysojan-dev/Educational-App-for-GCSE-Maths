@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/screens/ForgotPasswordScreen.dart';
-import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
+
+import '../models/UserModel.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -213,20 +218,57 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn
+          .signIn();
+
       if (googleSignInAccount != null) {
+        //
         final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
+        //
         final AuthCredential authCredential = GoogleAuthProvider.credential(
             accessToken: googleSignInAuthentication.accessToken,
             idToken: googleSignInAuthentication.idToken);
+        //
         await _auth.signInWithCredential(authCredential);
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen()));
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+        User? user = FirebaseAuth.instance.currentUser;
+        firebaseFirestore.collection(user!.uid).where(
+            "email", isEqualTo: user!.email).get();
+
+
+        if (await checkIfDocExists("users",user!.uid) == false) {
+          
+          UserModel userModel = UserModel();
+          userModel.email = user!.email;
+          userModel.uid = user!.uid;
+          userModel.displayName = user.displayName;
+
+          await firebaseFirestore.collection("users")
+              .doc(userModel.uid).set(userModel.toMap());
+        }
       }
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomeScreen()));
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e!.message.toString());
     }
   }
+
+
+
+  Future <bool> checkIfDocExists (String collection, String document ) async {
+    try {
+
+      var collectionRef = FirebaseFirestore.instance.collection(collection);
+      var doc = await collectionRef.doc(document).get();
+      print(doc.exists);
+      return doc.exists;
+
+    }on FirebaseAuthException catch (e){
+      return false;
+    }
+  }
+
 }

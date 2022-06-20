@@ -15,6 +15,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final _googleSignIn = GoogleSignIn();
+  var  userName = Text("");
+  var  userEmail = Text("");
+
   User? user = FirebaseAuth.instance.currentUser;
   UserModel userModel = UserModel();
 
@@ -23,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState () {
     super.initState();
+
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid).get()
@@ -34,6 +39,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    // if (_googleSignIn.isSignedIn() != false){
+    //   this.userName =  Text("${FirebaseAuth.instance.currentUser!.displayName}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
+    //   this.userEmail =  Text("${FirebaseAuth.instance.currentUser!.email}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
+    //
+    //
+    //
+    // } else {
+      //this.userName =  Text("${userModel.forename} ${userModel.surname}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
+      this.userName =  Text("${userModel.displayName}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
+
+      this.userEmail =  Text ("${userModel.email}", style:  TextStyle(color: Colors.black45, fontWeight: FontWeight.w500),);
+    //}
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("GCSE Maths Educational App"),
@@ -51,9 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
           //   child: Image.asset(''
           //   , fit: BoxFit.contain
           //   )),],
-            Text("${userModel.forename} ${userModel.surname}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),),
+            this.userName,
             SizedBox(height: 10 ,),
-            Text ("${userModel.email}", style:  TextStyle(color: Colors.black45, fontWeight: FontWeight.w500),),
+            this.userEmail,
             SizedBox(height: 15),
             ActionChip(label: Text( "Logout", style: TextStyle(color:Colors.black45, fontWeight: FontWeight.bold),),
                 avatar: Icon(Icons.logout, color: Colors.black45,),
