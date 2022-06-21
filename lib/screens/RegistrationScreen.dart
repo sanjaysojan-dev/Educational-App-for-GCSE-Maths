@@ -25,7 +25,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //
+
+    //Forename Field
     final forenameField = TextFormField(
       autofocus: false,
       controller: forenameEditingController,
@@ -42,11 +43,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Forname",
+          hintText: "Forename",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
-    //
+    //Surname Field
     final surnameField = TextFormField(
       autofocus: false,
       controller: surnameEditingController,
@@ -67,7 +68,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
-    //
+    //Email Field
     final emailField = TextFormField(
       autofocus: false,
       controller: emailEditingController,
@@ -88,7 +89,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
-    //
+    //Password Field
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordEditingController,
@@ -115,7 +116,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
-    //
+    //Confirmation Password Field
     final confirmPasswordField = TextFormField(
       autofocus: false,
       controller: confirmPassEditingController,
@@ -138,7 +139,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
-    //
+    // Registration Material Button
     final registrationButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -213,6 +214,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
 
+  ///A method to create new user through Firebase Authentication
+  ///
+  /// email: user email
+  /// password: confirmed password
   void register(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await auth.createUserWithEmailAndPassword(
@@ -225,6 +230,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+
+  ///A method to register user to the firestore user collection
+  /// If completed successfully then application transistions to home page
   void postDataToFirestore() async {
     // calls firestore
     // calls user model
@@ -236,9 +244,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     userModel.email = user!.email;
     userModel.uid = user!.uid;
-    //userModel.forename = forenameEditingController.text;
-    //userModel.surname = surnameEditingController.text;
-
     userModel.displayName = forenameEditingController.text +" "+surnameEditingController.text;
 
     await firebaseFirestore.collection("users")

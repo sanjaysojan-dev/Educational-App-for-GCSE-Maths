@@ -26,10 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //controllers for editing email/password fields
   final TextEditingController emailController = new TextEditingController();
-
   final TextEditingController passwordController = new TextEditingController();
 
   final _auth = FirebaseAuth.instance;
+  //Google Sign in Instance
   final _googleSignIn = GoogleSignIn();
 
   @override
@@ -49,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
         //   return "Please enter a valid email";
         // }
       },
-      //validator: () {},
       onSaved: (value) {
         emailController.text = value!;
       },
@@ -67,12 +66,11 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: true,
       controller: passwordController,
       validator: (value) {
+        //Minimum number of characters is 6
         RegExp regex = new RegExp(r'^.{6,}$');
-
         if (value!.isEmpty) {
           return "Please enter your password";
         }
-
         if (!regex.hasMatch(value)) {
           return "Please enter valid password with minimum of\n 8 characters";
         }
@@ -88,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
+    //login in Material Button
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -107,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
+    //Google Sign in Button - Accessed through external library
     final googleSignInButton = SignInButton(
       Buttons.Google,
       onPressed: () {
@@ -127,10 +127,22 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(36.0),
+
               child: Form(
                 key: _formKey,
+
                 child: Column(
+
+                  // Main Axis Alignment determines how Row and Column can position
+                  // their children in that space.
+
+                  //Positions children at the middle of the main axis.
                   mainAxisAlignment: MainAxisAlignment.center,
+
+                  //A Row’s cross axis is vertical, and a Column’s cross axis is
+                  // horizontal.
+
+                  //Positions children at the middle of the cross axis.
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     // SizedBox(
@@ -138,6 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   child: Image.asset(''
                     //   , fit: BoxFit.contain
                     //   )),
+
+                    //A box with a specified size. - If given a child, this widget
+                    // forces it to have a specific width and/or height.
                     SizedBox(height: 45),
                     email,
                     SizedBox(height: 25),
@@ -201,6 +216,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
+  /// A method to sign in using user email and password through
+  /// Firebase Authentication.
+  ///
+  /// email: user email to account
+  /// password: user password to account
+  ///
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await _auth
@@ -216,15 +238,19 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+
+  ///A method to sign through the Google Sign in interface
   void signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount = await _googleSignIn
           .signIn();
 
+      //since Google Sign In Account can be nullable you conduct a check
       if (googleSignInAccount != null) {
         //
         final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
+
         //
         final AuthCredential authCredential = GoogleAuthProvider.credential(
             accessToken: googleSignInAuthentication.accessToken,
@@ -232,22 +258,8 @@ class _LoginScreenState extends State<LoginScreen> {
         //
         await _auth.signInWithCredential(authCredential);
 
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-        User? user = FirebaseAuth.instance.currentUser;
-        firebaseFirestore.collection(user!.uid).where(
-            "email", isEqualTo: user!.email).get();
+        registerGoogleUser();
 
-
-        if (await checkIfDocExists("users",user!.uid) == false) {
-          
-          UserModel userModel = UserModel();
-          userModel.email = user!.email;
-          userModel.uid = user!.uid;
-          userModel.displayName = user.displayName;
-
-          await firebaseFirestore.collection("users")
-              .doc(userModel.uid).set(userModel.toMap());
-        }
       }
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -257,7 +269,40 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
+  /// A method to add Google Signed in users to the user firestore collection
+ void registerGoogleUser () async {
 
+    try {
+
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = FirebaseAuth.instance.currentUser;
+      firebaseFirestore.collection(user!.uid).where(
+          "email", isEqualTo: user!.email).get();
+
+      if (await checkIfDocExists("users",user!.uid) == false) {
+
+        UserModel userModel = UserModel();
+        userModel.email = user!.email;
+        userModel.uid = user!.uid;
+        userModel.displayName = user.displayName;
+
+        await firebaseFirestore.collection("users")
+            .doc(userModel.uid).set(userModel.toMap());
+      }
+
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e!.message.toString());
+    }
+ }
+
+
+  ///A method to check if Googled Signed in user has already been registed
+  ///in the user firestore collection
+  ///
+  /// collection: collection that needs to be accessed
+  /// document: the document that needs to be accessed
+  ///
+  /// Returns a boolean variable: True if document exists, false otherwise
   Future <bool> checkIfDocExists (String collection, String document ) async {
     try {
 

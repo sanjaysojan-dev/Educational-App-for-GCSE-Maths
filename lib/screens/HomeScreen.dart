@@ -40,19 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-
-    // if (_googleSignIn.isSignedIn() != false){
-    //   this.userName =  Text("${FirebaseAuth.instance.currentUser!.displayName}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
-    //   this.userEmail =  Text("${FirebaseAuth.instance.currentUser!.email}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
-    //
-    //
-    //
-    // } else {
-      //this.userName =  Text("${userModel.forename} ${userModel.surname}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
-      this.userName =  Text("${userModel.displayName}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
-
-      this.userEmail =  Text ("${userModel.email}", style:  TextStyle(color: Colors.black45, fontWeight: FontWeight.w500),);
-    //}
+      userName =  Text("${userModel.displayName}", style: TextStyle (fontSize: 20, fontWeight: FontWeight.bold),);
+      userEmail =  Text ("${userModel.email}", style:  TextStyle(color: Colors.black45, fontWeight: FontWeight.w500),);
 
 
     return Scaffold(

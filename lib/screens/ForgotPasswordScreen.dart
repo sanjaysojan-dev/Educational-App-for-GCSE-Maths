@@ -20,6 +20,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Email field
     final email = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -37,6 +38,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
+    //Reset Password Button
     final resetPasswordButton = Material(
         elevation: 5,
         borderRadius: BorderRadius.circular(30),
@@ -61,7 +63,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.blueAccent,
           ),
@@ -124,7 +126,10 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
     );
   }
 
-
+  ///A method to reset the password of an account using Firebase Authentication
+  ///email: email of user
+  ///
+  ///Returns a 'Future'
 Future passwordReset (String email ) async {
     if (_formKey.currentState!.validate()) {
 
