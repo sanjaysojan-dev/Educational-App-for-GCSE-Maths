@@ -33,6 +33,7 @@ dependencies:
   fluttertoast: ^8.0.9
   google_sign_in: ^5.3.3
   flutter_signin_button: ^2.0.0
+  shared_preferences: ^2.0.15
 
   flutter:
     sdk: flutter

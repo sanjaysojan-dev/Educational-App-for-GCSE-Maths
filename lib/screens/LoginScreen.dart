@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/screens/ForgotPasswordScreen.dart';
 import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/UserModel.dart';
-
-
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -29,8 +29,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = new TextEditingController();
 
   final _auth = FirebaseAuth.instance;
+
   //Google Sign in Instance
   final _googleSignIn = GoogleSignIn();
+
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +114,26 @@ class _LoginScreenState extends State<LoginScreen> {
       Buttons.Google,
       onPressed: () {
         signInWithGoogle();
-
       },
+    );
+
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.black;
+      }
+      return Colors.blue;
+    }
+
+    final rememberMeCheckBox = Checkbox(
+      checkColor: Colors.white,
+      fillColor: MaterialStateProperty.resolveWith(getColor),
+      value: isChecked,
+      onChanged: rememberLoginDetails,
     );
 
 /* returns a scaffold in which creates body in which contains the
@@ -127,12 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(36.0),
-
               child: Form(
                 key: _formKey,
-
                 child: Column(
-
                   // Main Axis Alignment determines how Row and Column can position
                   // their children in that space.
 
@@ -159,26 +177,42 @@ class _LoginScreenState extends State<LoginScreen> {
                     password,
                     SizedBox(height: 15),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ForgotPasswordScreen()));
-                          },
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 15),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                rememberMeCheckBox,
+                                const Text(
+                                  "Remember Me",
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15),
+                                )
+                              ]),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ForgotPasswordScreen()));
+                                },
+                                child: const Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
+                        ]),
                     SizedBox(height: 15),
                     loginButton,
                     SizedBox(height: 15),
@@ -216,7 +250,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-
   /// A method to sign in using user email and password through
   /// Firebase Authentication.
   ///
@@ -238,18 +271,17 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
   ///A method to sign through the Google Sign in interface
   void signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn
-          .signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
 
       //since Google Sign In Account can be nullable you conduct a check
       if (googleSignInAccount != null) {
         //
         final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+            await googleSignInAccount.authentication;
 
         //
         final AuthCredential authCredential = GoogleAuthProvider.credential(
@@ -259,7 +291,6 @@ class _LoginScreenState extends State<LoginScreen> {
         await _auth.signInWithCredential(authCredential);
 
         registerGoogleUser();
-
       }
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -268,33 +299,31 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
   /// A method to add Google Signed in users to the user firestore collection
- void registerGoogleUser () async {
-
+  void registerGoogleUser() async {
     try {
-
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       User? user = FirebaseAuth.instance.currentUser;
-      firebaseFirestore.collection(user!.uid).where(
-          "email", isEqualTo: user!.email).get();
+      firebaseFirestore
+          .collection(user!.uid)
+          .where("email", isEqualTo: user!.email)
+          .get();
 
-      if (await checkIfDocExists("users",user!.uid) == false) {
-
+      if (await checkIfDocExists("users", user!.uid) == false) {
         UserModel userModel = UserModel();
         userModel.email = user!.email;
         userModel.uid = user!.uid;
         userModel.displayName = user.displayName;
 
-        await firebaseFirestore.collection("users")
-            .doc(userModel.uid).set(userModel.toMap());
+        await firebaseFirestore
+            .collection("users")
+            .doc(userModel.uid)
+            .set(userModel.toMap());
       }
-
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e!.message.toString());
     }
- }
-
+  }
 
   ///A method to check if Googled Signed in user has already been registed
   ///in the user firestore collection
@@ -303,17 +332,31 @@ class _LoginScreenState extends State<LoginScreen> {
   /// document: the document that needs to be accessed
   ///
   /// Returns a boolean variable: True if document exists, false otherwise
-  Future <bool> checkIfDocExists (String collection, String document ) async {
+  Future<bool> checkIfDocExists(String collection, String document) async {
     try {
-
       var collectionRef = FirebaseFirestore.instance.collection(collection);
       var doc = await collectionRef.doc(document).get();
       print(doc.exists);
       return doc.exists;
-
-    }on FirebaseAuthException catch (e){
+    } on FirebaseAuthException catch (e) {
       return false;
     }
   }
 
+  
+  void rememberLoginDetails (bool? value){
+    isChecked = value!;
+
+    SharedPreferences.getInstance().then(
+        (preference) {
+          preference.setBool("checkBox", value);
+          preference.setString("email", emailController.text);
+          preference.setString("password", passwordController.text);
+        });
+
+    setState(() {
+      isChecked = value;
+    });
+
+  }
 }
