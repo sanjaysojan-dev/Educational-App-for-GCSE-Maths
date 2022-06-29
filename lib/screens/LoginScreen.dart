@@ -36,6 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isChecked = false;
 
   @override
+  void initState() {
+    loadLoginInfo();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     //email field
     final email = TextFormField(
@@ -343,20 +349,31 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  
-  void rememberLoginDetails (bool? value){
+  void rememberLoginDetails(bool? value) {
     isChecked = value!;
 
-    SharedPreferences.getInstance().then(
-        (preference) {
-          preference.setBool("checkBox", value);
-          preference.setString("email", emailController.text);
-          preference.setString("password", passwordController.text);
-        });
+    SharedPreferences.getInstance().then((preference) {
+      preference.setBool("checkBox", value);
+      preference.setString("email", emailController.text);
+      preference.setString("password", passwordController.text);
+    });
 
     setState(() {
       isChecked = value;
     });
+  }
 
+  void loadLoginInfo() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    var checkBox = preferences.getBool("checkBox");
+
+    if (checkBox!) {
+      setState(() {
+        emailController.text = preferences.getString("email").toString();
+        passwordController.text = preferences.getString("password").toString();
+        isChecked = true;
+      });
+    }
   }
 }
