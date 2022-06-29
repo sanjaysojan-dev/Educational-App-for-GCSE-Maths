@@ -360,6 +360,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  ///A method to set user login details to shared preferences
+  ///Sets value of isChecked
   void rememberLoginDetails(bool? value) {
     isChecked = value!;
 
@@ -374,6 +376,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+
+  ///A method to load user details when logging in from shared preferences
+  ///Sets value of isChecked
   void loadLoginInfo() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
