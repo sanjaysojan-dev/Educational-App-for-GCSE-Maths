@@ -263,6 +263,17 @@ class _LoginScreenState extends State<LoginScreen> {
   /// password: user password to account
   ///
   void signIn(String email, String password) async {
+
+    var preferences = SharedPreferences.getInstance();
+
+    if (isChecked) {
+      preferences.then((preference) {
+        preference.setBool("checkBox", isChecked);
+        preference.setString("email", emailController.text);
+        preference.setString("password", passwordController.text);
+      });
+    }
+
     if (_formKey.currentState!.validate()) {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
