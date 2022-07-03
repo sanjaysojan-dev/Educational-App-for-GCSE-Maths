@@ -4,6 +4,7 @@ import 'package:educational_app_for_maths/screens/LoginScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:educational_app_for_maths/utils/FirestoreUtil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,31 +21,29 @@ class _HomeScreenState extends State<HomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel userModel = UserModel();
 
+  FirestoreUtil firestoreUtil = new FirestoreUtil();
+  late Stream quizStream;
+
+
   @override
   void initState() {
+
+    firestoreUtil.getQuizQuestions().then((value){
+      setState(() {
+        quizStream = value;
+      });
+
+    }
+    );
     super.initState();
 
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.userModel = UserModel.fromMap(value.data());
-      setState(() {});
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // userName = Text(
-    //   "${userModel.displayName}",
-    //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    // );
 
-    // userEmail = Text(
-    //   "${userModel.email}",
-    //   style: TextStyle(color: Colors.black45, fontWeight: FontWeight.w500),
-    // );
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -61,38 +60,17 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
           child: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const <Widget>[
-              // SizedBox(
-              //   height: 200,
-              //   child: Image.asset(''
-              //   , fit: BoxFit.contain
-              //   )),],
-              //this.userName,
-              SizedBox(
-                height: 10,
-              ),
-              //this.userEmail,
-              SizedBox(height: 15),
-              // ActionChip(
-              //     label: Text(
-              //       "Logout",
-              //       style: TextStyle(
-              //           color: Colors.black45, fontWeight: FontWeight.bold),
-              //     ),
-              //     avatar: Icon(
-              //       Icons.logout,
-              //       color: Colors.black45,
-              //     ),
-              //     onPressed: () {
-              //       logout(context);
-              //     })
-
-
-
-            ]),
+        child: StreamBuilder(
+          stream: quizStream,
+          builder: (context, AsyncSnapshot snapshot) {
+            return snapshot.data == null ? Container():
+                ListView.builder(
+                    itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                  return
+                });
+          }
+        ),
       )),
     );
   }

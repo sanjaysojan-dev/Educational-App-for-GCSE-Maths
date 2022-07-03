@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
-
     //password field
     final password = TextFormField(
       autofocus: false,
@@ -375,7 +374,6 @@ class _LoginScreenState extends State<LoginScreen> {
       isChecked = value;
     });
   }
-
 
   ///A method to load user details when logging in from shared preferences
   ///Sets value of isChecked
