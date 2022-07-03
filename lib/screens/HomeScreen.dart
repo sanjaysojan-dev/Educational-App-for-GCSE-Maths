@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/models/UserModel.dart';
 import 'package:educational_app_for_maths/screens/LoginScreen.dart';
+import 'package:educational_app_for_maths/widgets/QuizCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   UserModel userModel = UserModel();
 
   FirestoreUtil firestoreUtil = new FirestoreUtil();
-  late Stream quizStream;
+  Stream? quizStream;
 
 
   @override
@@ -62,12 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.all(20),
         child: StreamBuilder(
           stream: quizStream,
-          builder: (context, AsyncSnapshot snapshot) {
+          builder: (context, snapshot) {
+
             return snapshot.data == null ? Container():
                 ListView.builder(
-                    itemCount: snapshot.data.length,
+                  itemCount: (snapshot!.data as QuerySnapshot).size,
                   itemBuilder: (context, index) {
-                  return
+                  return QuizCard(title: (snapshot!.data as QuerySnapshot).docs[index].get("title"),
+                      imageURL: (snapshot!.data as QuerySnapshot).docs[index].get("imageURL"));
                 });
           }
         ),
