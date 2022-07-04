@@ -25,55 +25,52 @@ class _HomeScreenState extends State<HomeScreen> {
   FirestoreUtil firestoreUtil = new FirestoreUtil();
   Stream? quizStream;
 
-
   @override
   void initState() {
-
-    firestoreUtil.getQuizQuestions().then((value){
+    firestoreUtil.getQuizQuestions().then((value) {
       setState(() {
         quizStream = value;
       });
-
-    }
-    );
+    });
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text("GCSE Maths Educational App"),
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(
-              onSelected: (item) => selectedTab (context,item),
+              onSelected: (item) => selectedTab(context, item),
               itemBuilder: (context) =>
-                  [PopupMenuItem<int>(
-                      value: 0, child: Text("Sign Out"))])
+                  [PopupMenuItem<int>(value: 0, child: Text("Sign Out"))])
         ],
       ),
       body: Center(
           child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         child: StreamBuilder(
-          stream: quizStream,
-          builder: (context, snapshot) {
-
-            return snapshot.data == null ? Container():
-                ListView.builder(
-                  itemCount: (snapshot!.data as QuerySnapshot).size,
-                  itemBuilder: (context, index) {
-                  return QuizCard(title: (snapshot!.data as QuerySnapshot).docs[index].get("title"),
-                      imageURL: (snapshot!.data as QuerySnapshot).docs[index].get("imageURL"));
-                });
-          }
-        ),
+            stream: quizStream,
+            builder: (context, snapshot) {
+              return snapshot.data == null
+                  ? Container()
+                  : ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10,);
+                  },
+                      itemCount: (snapshot!.data as QuerySnapshot).size,
+                      itemBuilder: (context, index) {
+                        return QuizCard(
+                            title: (snapshot!.data as QuerySnapshot)
+                                .docs[index]
+                                .get("title"),
+                            imageURL: (snapshot!.data as QuerySnapshot)
+                                .docs[index]
+                                .get("imageURL"));
+                      });
+            }),
       )),
     );
   }
@@ -88,14 +85,13 @@ class _HomeScreenState extends State<HomeScreen> {
         (route) => false);
   }
 
-  void selectedTab (BuildContext context, int item) {
-
+  void selectedTab(BuildContext context, int item) {
     switch (item) {
       case 0:
         logout(context);
         break;
       case 1:
-        break ;
+        break;
     }
   }
 }
