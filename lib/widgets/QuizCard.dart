@@ -23,7 +23,7 @@ class QuizCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.black87,
+                        color: Colors.white,
                         fontWeight: FontWeight.w400)),
               ]
           ),

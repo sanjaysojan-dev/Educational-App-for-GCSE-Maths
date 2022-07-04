@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
+          prefixIcon: Icon(Icons.mail, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.key),
+          prefixIcon: Icon(Icons.key, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Colors.yellow,
       child: MaterialButton(
         onPressed: () {
           signIn(emailController.text, passwordController.text);
@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
           "LOGIN",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
         ),
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -129,9 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return Colors.black;
+        return Colors.black26;
       }
-      return Colors.blue;
+      return Colors.yellow.shade700;
     }
 
     final rememberMeCheckBox = Checkbox(
@@ -191,8 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 const Text(
                                   "Remember Me",
                                   style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 15),
                                 )
                               ]),
@@ -210,8 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const Text(
                                   "Forgot Password?",
                                   style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: 15),
                                 ),
                               )
@@ -236,8 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             "Signup",
                             style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 15),
                           ),
                         )

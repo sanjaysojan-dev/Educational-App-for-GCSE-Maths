@@ -39,7 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("GCSE Maths Educational App"),
+        backgroundColor: Colors.yellow.shade700,
+        title: Text("GCSE Maths Educational App",
+            style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 20)),
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(
