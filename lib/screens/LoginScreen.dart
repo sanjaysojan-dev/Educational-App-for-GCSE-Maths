@@ -122,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
 
+    //Found in documentation
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,

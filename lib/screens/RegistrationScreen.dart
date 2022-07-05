@@ -143,7 +143,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final registrationButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Colors.yellow,
       child: MaterialButton(
         onPressed: () {
           register(
@@ -169,7 +169,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.blueAccent),
+            icon: Icon(Icons.arrow_back, color: Colors.yellow),
             onPressed: () {
               // passing this to our root
               Navigator.of(context).pop();

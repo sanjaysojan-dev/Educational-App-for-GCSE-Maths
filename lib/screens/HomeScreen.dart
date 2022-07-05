@@ -45,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.black,
             fontWeight: FontWeight.w600,
             fontSize: 20)),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              // passing this to our root
+              logout(context);
+            }),
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(

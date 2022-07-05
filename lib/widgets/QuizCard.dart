@@ -1,3 +1,4 @@
+import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,12 @@ class QuizCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-    ClipRRect(
+    GestureDetector(
+        onTap: (){
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => MCQuizScreen()));
+        },
+        child: ClipRRect(
       borderRadius: BorderRadius.circular(15.0),
       child:
       Container(
@@ -28,6 +34,7 @@ class QuizCard extends StatelessWidget {
               ]
           ),
         )
+    )
     );
   }
 }
