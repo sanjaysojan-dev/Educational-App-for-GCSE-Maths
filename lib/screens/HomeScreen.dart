@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Container()
                   : ListView.separated(
                   separatorBuilder: (context, index) {
-                    return SizedBox(height: 10,);
+                    return SizedBox(height: 20,);
                   },
                       itemCount: (snapshot!.data as QuerySnapshot).size,
                       itemBuilder: (context, index) {
