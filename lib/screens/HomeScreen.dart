@@ -24,14 +24,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   FirestoreUtil firestoreUtil = new FirestoreUtil();
   Stream? quizStream;
+  Stream? questionStream;
 
   @override
   void initState() {
-    firestoreUtil.getQuizQuestions().then((value) {
-      setState(() {
-        quizStream = value;
+    // firestoreUtil.getQuizQuestions().then((value) {
+    //   setState(() {
+    //     quizStream = value;
+    //
+    //   });
+    // });
+    firestoreUtil.getSpecificQuestions().then((value) {
+        setState(() {
+          questionStream = value;
+        });
       });
-    });
+
+
+
     super.initState();
   }
 
@@ -63,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         child: StreamBuilder(
-            stream: quizStream,
+            stream: questionStream,
             builder: (context, snapshot) {
               return snapshot.data == null
                   ? Container()
@@ -73,18 +83,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                       itemCount: (snapshot!.data as QuerySnapshot).size,
                       itemBuilder: (context, index) {
+
+
                         return QuizCard(
                             title: (snapshot!.data as QuerySnapshot)
                                 .docs[index]
                                 .get("title"),
                             imageURL: (snapshot!.data as QuerySnapshot)
                                 .docs[index]
-                                .get("imageURL"));
+                                .get("imageURL"),
+                        quizID: (snapshot!.data as QuerySnapshot)
+                            .docs[index]
+                            .get("quizID"),);
+
+
+                      //print(ref.toString());
+                      //return Container();
                       });
             }),
       )),
     );
   }
+
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();

@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class QuizCard extends StatelessWidget {
   final String title;
   final String imageURL;
+  final String quizID;
 
-  const QuizCard({required this.title, required this.imageURL});
+  const QuizCard({required this.title, required this.imageURL, required this.quizID});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class QuizCard extends StatelessWidget {
     GestureDetector(
         onTap: (){
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MCQuizScreen()));
+              MaterialPageRoute(builder: (context) => MCQuizScreen(this.quizID)));
         },
         child: ClipRRect(
       borderRadius: BorderRadius.circular(15.0),

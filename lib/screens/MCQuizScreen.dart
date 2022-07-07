@@ -2,13 +2,19 @@ import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 class MCQuizScreen extends StatefulWidget {
-  const MCQuizScreen({Key? key}) : super(key: key);
+
+  //const MCQuizScreen({Key? key}) : super(key: key);
+
+  final String quizID;
+  MCQuizScreen(this.quizID);
+
 
   @override
   _MCQuizScreenState createState() => _MCQuizScreenState();
 }
 
 class _MCQuizScreenState extends State<MCQuizScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,4 +35,12 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       ),
     );
   }
+
+
+
+
+
+
+
+
 }
