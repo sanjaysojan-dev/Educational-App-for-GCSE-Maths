@@ -45,6 +45,7 @@ class FirestoreUtil {
     //   }
     // });
 
+    return db.snapshots();
   }
 
   List<QuestionModel> get questions => _questions;
