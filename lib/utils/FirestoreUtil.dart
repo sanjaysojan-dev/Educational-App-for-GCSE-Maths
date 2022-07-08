@@ -1,27 +1,55 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:educational_app_for_maths/models/QuestionModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FirestoreUtil {
+
+  late List<QuestionModel> _questions = <QuestionModel>[];
+
+
   getQuizQuestions() async {
     return await FirebaseFirestore.instance
         .collection("quiz_questions")
         .snapshots();
   }
 
-  getSpecificQuestions() async {
 
-    Map<String, dynamic>? test;
-    var db = await FirebaseFirestore.instance.collection("quiz_questions/Algebra_1/questions");
-    db.doc("question_1").get().then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        print('Document data: ${documentSnapshot.data()}');
-        test = documentSnapshot.data() as Map<String, dynamic>?;
-      } else {
-        print('Document does not exist on the database');
-      }
+  getSpecificQuestions(String questionID) async {
+
+
+    var db = await FirebaseFirestore.instance.collection("quiz_questions/"+ questionID +"/questions");
+    db.get().then((QuerySnapshot querySnapshot) {
+
+     if (querySnapshot.docs.isEmpty == false){
+         querySnapshot.docs.forEach((doc) {
+
+           QuestionModel question = QuestionModel();
+           question.setQuestionTitle = doc["question"];
+           question.setQuestionOptions = Map<String, dynamic>.from(doc["options"]);
+           _questions.add(question);
+         });
+     } else {
+       print('Document does not exist on the database');
+     }
     });
 
-    return test;
+    //     .then((DocumentSnapshot documentSnapshot) {
+    //   if (documentSnapshot.exists) {
+    //     print('Document data: ${documentSnapshot.data()}');
+    //     test = documentSnapshot.data() as Map<String, dynamic>?;
+    //   } else {
+    //     print('Document does not exist on the database');
+    //   }
+    // });
+
   }
+
+  List<QuestionModel> get questions => _questions;
+
+
+
+
 }

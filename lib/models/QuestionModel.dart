@@ -2,17 +2,17 @@ class QuestionModel {
 
    late final String _question;
 
-   late final Map<String, bool> _options;
+   late final Map<String, dynamic> _options;
 
    String get question => _question;
-   Map<String, bool> get options => _options;
+   Map<String, dynamic> get options => _options;
 
 
-  set question(String value) {
+  set setQuestionTitle(String value) {
     _question = value;
   }
-  
-  set options(Map<String, bool> value) {
+
+  set setQuestionOptions(Map<String, dynamic> value) {
     _options = value;
   }
 }

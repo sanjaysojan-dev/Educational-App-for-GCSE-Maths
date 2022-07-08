@@ -28,17 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // firestoreUtil.getQuizQuestions().then((value) {
-    //   setState(() {
-    //     quizStream = value;
-    //
-    //   });
-    // });
-    firestoreUtil.getSpecificQuestions().then((value) {
-        setState(() {
-          questionStream = value;
-        });
+    firestoreUtil.getQuizQuestions().then((value) {
+      setState(() {
+        quizStream = value;
+
       });
+    });
+    // firestoreUtil.getSpecificQuestions().then((value) {
+    //     setState(() {
+    //       questionStream = value;
+    //     });
+    //   });
 
 
 
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Padding(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         child: StreamBuilder(
-            stream: questionStream,
+            stream: quizStream,
             builder: (context, snapshot) {
               return snapshot.data == null
                   ? Container()
@@ -84,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: (snapshot!.data as QuerySnapshot).size,
                       itemBuilder: (context, index) {
 
-
                         return QuizCard(
                             title: (snapshot!.data as QuerySnapshot)
                                 .docs[index]
@@ -92,9 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             imageURL: (snapshot!.data as QuerySnapshot)
                                 .docs[index]
                                 .get("imageURL"),
-                        quizID: (snapshot!.data as QuerySnapshot)
-                            .docs[index]
-                            .get("quizID"),);
+                          quizID:(snapshot!.data as QuerySnapshot)
+                              .docs[index]
+                              .get("quizID") ,
+                        );
 
 
                       //print(ref.toString());

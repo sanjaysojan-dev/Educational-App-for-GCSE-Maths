@@ -1,19 +1,27 @@
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../models/QuestionModel.dart';
+
 class MCQuizScreen extends StatefulWidget {
 
   //const MCQuizScreen({Key? key}) : super(key: key);
 
-  final String quizID;
-  MCQuizScreen(this.quizID);
+  List<QuestionModel> _questions = <QuestionModel>[];
+
+  MCQuizScreen(this._questions);
 
 
   @override
-  _MCQuizScreenState createState() => _MCQuizScreenState();
+  _MCQuizScreenState createState() => _MCQuizScreenState(_questions);
 }
 
 class _MCQuizScreenState extends State<MCQuizScreen> {
+
+  List<QuestionModel> _questions;
+  _MCQuizScreenState(this._questions);
+
+   late var questionTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +41,40 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                 fontSize: 20)),
         centerTitle: true,
       ),
+
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                //A Row’s cross axis is vertical, and a Column’s cross axis is
+                // horizontal.
+
+                //Positions children at the middle of the cross axis.
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 45),
+                  questionExtraction ()
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
 
+Widget questionExtraction (){
 
+    //_questions[0].question;
+
+    print(_questions.length);
+    return Text(_questions[0].question);
+
+}
 
 
 
