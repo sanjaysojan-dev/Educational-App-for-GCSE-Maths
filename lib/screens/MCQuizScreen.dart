@@ -1,4 +1,5 @@
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
+import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 
@@ -20,6 +21,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
 
   _MCQuizScreenState(this._questions);
 
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +42,12 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                 fontSize: 20)),
         centerTitle: true,
       ),
-      body: Center(
-        child: SingleChildScrollView(
+      body: Stack(children: <Widget>[
+        SingleChildScrollView(
           child: Container(
             child: Form(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
 
                 //A Row’s cross axis is vertical, and a Column’s cross axis is
                 // horizontal.
@@ -53,15 +55,17 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                 //Positions children at the middle of the cross axis.
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: 45),
-                  questionExtraction(),
-
+                  QuestionCard(
+                      question: _questions[0].question,
+                      questionIndex: index,
+                      totalQuestions: _questions.length),
+                  //questionExtraction()
                 ],
               ),
             ),
           ),
         ),
-      ),
+      ]),
     );
   }
 
