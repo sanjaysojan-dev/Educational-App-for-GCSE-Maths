@@ -1,4 +1,5 @@
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
+import 'package:educational_app_for_maths/widgets/NextQuestionButton.dart';
 import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -19,9 +20,10 @@ class MCQuizScreen extends StatefulWidget {
 class _MCQuizScreenState extends State<MCQuizScreen> {
   List<QuestionModel> _questions;
 
+  int index = 0;
   _MCQuizScreenState(this._questions);
 
-  int index = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +58,11 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   QuestionCard(
-                      question: _questions[0].question,
+                      question: _questions[index].question,
                       questionIndex: index,
                       totalQuestions: _questions.length),
+                  SizedBox(height: 25),
+                  NextQuestionButton(nextQuestion: nextIndex),
                   //questionExtraction()
                 ],
               ),
@@ -69,10 +73,11 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     );
   }
 
-  Widget questionExtraction() {
-    //_questions[0].question;
-
-    print(_questions.length);
-    return Text(_questions[0].question);
-  }
+    void nextIndex() {
+    if (index != _questions.length -1) {
+      setState(() {
+        index++;
+      });
+    }
+   }
 }

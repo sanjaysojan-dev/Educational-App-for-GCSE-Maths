@@ -82,7 +82,12 @@ class QuizCard extends StatelessWidget {
           } else {
             // We can show the loading view until the data comes back.
             debugPrint('Step 1, build loading widget');
-            return CircularProgressIndicator();
+            return Center (child:
+            SizedBox(
+                child: CircularProgressIndicator(),
+              height: 200,
+              width: 200,
+            ));
           }
         },
       );
