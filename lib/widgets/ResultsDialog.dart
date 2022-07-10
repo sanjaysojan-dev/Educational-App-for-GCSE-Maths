@@ -1,5 +1,6 @@
 import 'package:educational_app_for_maths/models/QuestionModel.dart';
 import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
+import 'package:educational_app_for_maths/screens/QuizWorkingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,10 @@ class ResultsDialog extends StatelessWidget {
           ),),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
+            => QuizWorkingScreen()), (route) => false);
+          },
           child: Text('Show Workings'),
         ),
       ],
