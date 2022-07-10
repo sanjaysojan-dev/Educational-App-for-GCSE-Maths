@@ -76,11 +76,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                     SizedBox(height: 20),
                     OptionsCard(
                       option: _questions[index].options.keys.toList()[i],
-                      color: onPressed
-                          ? _questions[index].options.values.toList()[i] == true
-                              ? Colors.green.shade700
-                              : Colors.red.shade700
-                          : Colors.yellow,
+                      color: colorPicker(index , i),
                       onPressed: onSelection,
                     )
                   ]),
@@ -96,8 +92,17 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     );
   }
 
-  colorPicker(bool value) {
-    return value ? Colors.green.shade700 : Colors.red.shade700;
+  Color colorPicker(int index, int option) {
+
+    if (onPressed) {
+      if (_questions[index].options.values.toList()[option] == true){
+        return Colors.green.shade700;
+      } else {
+        return Colors.red.shade700;
+      }
+    } else {
+      return Colors.yellow;
+    }
   }
 
   void nextIndex() {
