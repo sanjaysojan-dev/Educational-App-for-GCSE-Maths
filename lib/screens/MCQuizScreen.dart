@@ -2,6 +2,7 @@ import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:educational_app_for_maths/widgets/NextQuestionButton.dart';
 import 'package:educational_app_for_maths/widgets/OptionsCard.dart';
 import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
+import 'package:educational_app_for_maths/widgets/ResultsDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -50,9 +51,11 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
             }),
         actions: [
           IconButton(
-              icon: Icon(Icons.help), color: Colors.black, onPressed: () {
-            Fluttertoast.showToast(msg: _questions[index].hint);
-          })
+              icon: Icon(Icons.help),
+              color: Colors.black,
+              onPressed: () {
+                Fluttertoast.showToast(msg: _questions[index].hint);
+              })
         ],
         title: Text("Score: " '$score',
             style: TextStyle(
@@ -83,7 +86,6 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                         child: OptionsCard(
                           option: _questions[index].options.keys.toList()[i],
                           color: colorPicker(index, i),
-
                         )),
                   ]),
                 SizedBox(height: 20),
@@ -99,9 +101,21 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
   }
 
   scoreCalculation(int index, int option) {
-    if (_questions[index].options.values.toList()[option] && onPressed == false) {
+    if (_questions[index].options.values.toList()[option] &&
+        onPressed == false) {
       score++;
+      Fluttertoast.showToast(
+          msg: "Well done! Correct Answer",
+          backgroundColor: Colors.yellow,
+          textColor: Colors.black);
+    } else if (!_questions[index].options.values.toList()[option] &&
+        onPressed == false) {
+      Fluttertoast.showToast(
+          msg: "Not quite right",
+          backgroundColor: Colors.yellow,
+          textColor: Colors.black);
     }
+
     setState(() {
       onPressed = true;
     });
@@ -129,6 +143,12 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       } else {
         Fluttertoast.showToast(msg: "Please select an Option");
       }
+    } else if (index == _questions.length - 1) {
+      showDialog(
+          context: context,
+          builder: (ctx) => ResultsDialog(
+              totalNumQuestions: _questions.length,
+              score: score));
     }
   }
 }
