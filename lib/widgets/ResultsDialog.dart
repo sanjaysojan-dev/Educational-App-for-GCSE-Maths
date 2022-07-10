@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 import '../utils/FirestoreUtil.dart';
 
 class ResultsDialog extends StatelessWidget {
-  ResultsDialog({required this.totalNumQuestions, required this.score});
+  ResultsDialog({required this.totalNumQuestions, required this.score, required this.resetQuiz});
 
   final int totalNumQuestions;
   final int score;
+  final VoidCallback resetQuiz;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Results'),
+      backgroundColor: Colors.white,
       content: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -22,7 +24,7 @@ class ResultsDialog extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0),
             child: Container(
                 height: 70,
-                width: 300,
+                width: 150,
                 color: colorPicker(),
                 child: Stack(
                     alignment: Alignment.center, children: <Widget>[
@@ -38,9 +40,23 @@ class ResultsDialog extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          
+
         ],
       ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            resetQuiz();
+          },
+          child: Text('Start over?', style: TextStyle(
+            color: Colors.black87
+          ),),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: Text('Show Workings'),
+        ),
+      ],
     );
   }
 
@@ -59,20 +75,3 @@ class ResultsDialog extends StatelessWidget {
 
 }
 
-// TextButton(
-// onPressed: () {},
-// child: Text(
-// 'CANCEL',
-// style: TextStyle(
-// fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
-// ),
-// ),
-// SizedBox(height: 10,),
-// TextButton(
-// onPressed: () {},
-// child: Text(
-// 'Show Calculations',
-// style: TextStyle(
-// fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
-// ),
-// )

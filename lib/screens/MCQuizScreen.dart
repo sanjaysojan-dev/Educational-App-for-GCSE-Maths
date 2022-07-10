@@ -148,7 +148,16 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
           context: context,
           builder: (ctx) => ResultsDialog(
               totalNumQuestions: _questions.length,
-              score: score));
+              score: score,
+          resetQuiz: resetQuiz,));
     }
+  }
+
+  void resetQuiz(){
+    setState(() {
+      onPressed = false;
+      index = 0;
+      score = 0;
+    });
   }
 }
