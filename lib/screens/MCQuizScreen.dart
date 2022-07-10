@@ -4,6 +4,7 @@ import 'package:educational_app_for_maths/widgets/OptionsCard.dart';
 import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../models/QuestionModel.dart';
 
@@ -23,6 +24,14 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
 
   int index = 0;
 
+  bool onPressed = false;
+
+  onSelection() {
+    setState(() {
+      onPressed = true;
+    });
+  }
+
   _MCQuizScreenState(this._questions);
 
   @override
@@ -38,8 +47,8 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                   MaterialPageRoute(builder: (context) => HomeScreen()));
             }),
         actions: [
-          IconButton(icon: Icon(Icons.help), color: Colors.black,
-          onPressed: (){} )
+          IconButton(
+              icon: Icon(Icons.help), color: Colors.black, onPressed: () {})
         ],
         title: Text("GCSE Maths Educational App",
             style: TextStyle(
@@ -51,44 +60,56 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       body: Stack(children: <Widget>[
         SingleChildScrollView(
           child: Container(
-              //padding: const EdgeInsets.symmetric(vertical: 36.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+            //padding: const EdgeInsets.symmetric(vertical: 36.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
 
-                //A Row’s cross axis is vertical, and a Column’s cross axis is
-                // horizontal.
+              //A Row’s cross axis is vertical, and a Column’s cross axis is
+              // horizontal.
 
-                //Positions children at the middle of the cross axis.
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  QuestionCard(question: _questions[index].question),
-                  for (int i = 0; i < _questions[index].options.length; i++)
-                    OptionsCard(option: _questions[index].options.keys.toList()[i])
-                  ,
-                  NextQuestionButton(nextQuestion: nextIndex),
+              //Positions children at the middle of the cross axis.
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                QuestionCard(question: _questions[index].question),
+                for (int i = 0; i < _questions[index].options.length; i++)
+                  Column(children: <Widget>[
+                    SizedBox(height: 20),
+                    OptionsCard(
+                      option: _questions[index].options.keys.toList()[i],
+                      color: onPressed
+                          ? _questions[index].options.values.toList()[i] == true
+                              ? Colors.green.shade700
+                              : Colors.red.shade700
+                          : Colors.yellow,
+                      onPressed: onSelection,
+                    )
+                  ]),
+                SizedBox(height: 20),
+                NextQuestionButton(nextQuestion: nextIndex),
 
-                  //questionExtraction()
-                ],
-              ),
+                //questionExtraction()
+              ],
+            ),
           ),
         ),
       ]),
     );
   }
 
-
-  setOptionsCard (){
-    for (int i = 0; i < _questions[index].options.length; i++){
-      SizedBox(height: 25);
-      OptionsCard(option: _questions[index].options.keys.toList()[i]);
-    }
+  colorPicker(bool value) {
+    return value ? Colors.green.shade700 : Colors.red.shade700;
   }
 
   void nextIndex() {
     if (index != _questions.length - 1) {
+      if (onPressed){
       setState(() {
+        onPressed = false;
         index++;
       });
+      } else {
+        Fluttertoast.showToast(msg: "Please select an Option");
+      }
     }
   }
 }

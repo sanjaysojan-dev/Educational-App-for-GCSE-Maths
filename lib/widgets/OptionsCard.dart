@@ -9,9 +9,14 @@ class OptionsCard extends StatelessWidget {
   const OptionsCard({
     Key? key,
     required this.option,
+    required this.color,
+    required this.onPressed
+
   }) : super(key: key);
 
   final String option;
+  final Color color;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +34,15 @@ class OptionsCard extends StatelessWidget {
         ],
       ),
       style: ElevatedButton.styleFrom(
-        primary: Colors.yellow,
+        primary: color,
         fixedSize: Size(350, 10)// Background color
       ),
-      onPressed: (){},
+      onPressed: onPressed,
     );;
   }
+
+
+
+
+
 }
