@@ -24,6 +24,8 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
 
   int index = 0;
 
+  int score = 0;
+
   bool onPressed = false;
 
   onSelection() {
@@ -50,7 +52,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
           IconButton(
               icon: Icon(Icons.help), color: Colors.black, onPressed: () {})
         ],
-        title: Text("GCSE Maths Educational App",
+        title: Text("Score: " '$score',
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
@@ -74,11 +76,13 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                 for (int i = 0; i < _questions[index].options.length; i++)
                   Column(children: <Widget>[
                     SizedBox(height: 20),
-                    OptionsCard(
-                      option: _questions[index].options.keys.toList()[i],
-                      color: colorPicker(index , i),
-                      onPressed: onSelection,
-                    )
+                    GestureDetector(
+                        onTap: () => scoreCalculation(index, i),
+                        child: OptionsCard(
+                          option: _questions[index].options.keys.toList()[i],
+                          color: colorPicker(index, i),
+
+                        )),
                   ]),
                 SizedBox(height: 20),
                 NextQuestionButton(nextQuestion: nextIndex),
@@ -92,10 +96,18 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     );
   }
 
-  Color colorPicker(int index, int option) {
+  scoreCalculation(int index, int option) {
+    if (_questions[index].options.values.toList()[option] && onPressed == false) {
+      score++;
+    }
+    setState(() {
+      onPressed = true;
+    });
+  }
 
+  Color colorPicker(int index, int option) {
     if (onPressed) {
-      if (_questions[index].options.values.toList()[option] == true){
+      if (_questions[index].options.values.toList()[option] == true) {
         return Colors.green.shade700;
       } else {
         return Colors.red.shade700;
@@ -107,11 +119,11 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
 
   void nextIndex() {
     if (index != _questions.length - 1) {
-      if (onPressed){
-      setState(() {
-        onPressed = false;
-        index++;
-      });
+      if (onPressed) {
+        setState(() {
+          onPressed = false;
+          index++;
+        });
       } else {
         Fluttertoast.showToast(msg: "Please select an Option");
       }

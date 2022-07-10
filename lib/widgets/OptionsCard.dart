@@ -10,39 +10,32 @@ class OptionsCard extends StatelessWidget {
     Key? key,
     required this.option,
     required this.color,
-    required this.onPressed
-
   }) : super(key: key);
 
   final String option;
   final Color color;
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:  <Widget>[
-          Text(
-             option,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
+    return Container(
+        width: 350,
+        height: 80,
+        child: Card(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                option,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    color: color == Colors.yellow ? Colors.black : Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
-        ],
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: color,
-        fixedSize: Size(350, 10)// Background color
-      ),
-      onPressed: onPressed,
-    );;
+          color: color,
+        ));
   }
-
-
-
-
-
 }
