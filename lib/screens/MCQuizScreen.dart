@@ -50,7 +50,9 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
             }),
         actions: [
           IconButton(
-              icon: Icon(Icons.help), color: Colors.black, onPressed: () {})
+              icon: Icon(Icons.help), color: Colors.black, onPressed: () {
+            Fluttertoast.showToast(msg: _questions[index].hint);
+          })
         ],
         title: Text("Score: " '$score',
             style: TextStyle(
