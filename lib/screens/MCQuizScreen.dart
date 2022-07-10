@@ -1,5 +1,6 @@
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:educational_app_for_maths/widgets/NextQuestionButton.dart';
+import 'package:educational_app_for_maths/widgets/OptionsCard.dart';
 import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -21,9 +22,8 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
   List<QuestionModel> _questions;
 
   int index = 0;
+
   _MCQuizScreenState(this._questions);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,10 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => HomeScreen()));
             }),
+        actions: [
+          IconButton(icon: Icon(Icons.help), color: Colors.black,
+          onPressed: (){} )
+        ],
         title: Text("GCSE Maths Educational App",
             style: TextStyle(
                 color: Colors.black,
@@ -47,7 +51,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       body: Stack(children: <Widget>[
         SingleChildScrollView(
           child: Container(
-            child: Form(
+              //padding: const EdgeInsets.symmetric(vertical: 36.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
 
@@ -57,27 +61,34 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                 //Positions children at the middle of the cross axis.
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  QuestionCard(
-                      question: _questions[index].question,
-                      questionIndex: index,
-                      totalQuestions: _questions.length),
-                  SizedBox(height: 25),
+                  QuestionCard(question: _questions[index].question),
+                  for (int i = 0; i < _questions[index].options.length; i++)
+                    OptionsCard(option: _questions[index].options.keys.toList()[i])
+                  ,
                   NextQuestionButton(nextQuestion: nextIndex),
+
                   //questionExtraction()
                 ],
               ),
-            ),
           ),
         ),
       ]),
     );
   }
 
-    void nextIndex() {
-    if (index != _questions.length -1) {
+
+  setOptionsCard (){
+    for (int i = 0; i < _questions[index].options.length; i++){
+      SizedBox(height: 25);
+      OptionsCard(option: _questions[index].options.keys.toList()[i]);
+    }
+  }
+
+  void nextIndex() {
+    if (index != _questions.length - 1) {
       setState(() {
         index++;
       });
     }
-   }
+  }
 }

@@ -8,16 +8,10 @@ import '../utils/FirestoreUtil.dart';
 class QuestionCard extends StatelessWidget {
   const QuestionCard(
       {Key? key,
-      required this.question,
-      required this.questionIndex,
-      required this.totalQuestions})
+      required this.question,})
       : super(key: key);
 
   final String question;
-  final int questionIndex;
-  final int totalQuestions;
-
-  //FirestoreUtil firestoreUtil = new FirestoreUtil();
 
   @override
   Widget build(BuildContext context) {
