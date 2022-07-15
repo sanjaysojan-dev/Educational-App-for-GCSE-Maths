@@ -144,12 +144,16 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
         Fluttertoast.showToast(msg: "Please select an Option");
       }
     } else if (index == _questions.length - 1) {
-      showDialog(
-          context: context,
-          builder: (ctx) => ResultsDialog(
+      if (onPressed) {
+        showDialog(
+            context: context,
+            builder: (ctx) => ResultsDialog(
               totalNumQuestions: _questions.length,
               score: score,
-          resetQuiz: resetQuiz,));
+              resetQuiz: resetQuiz,));
+      } else {
+        Fluttertoast.showToast(msg: "Please select an Option");
+      }
     }
   }
 
