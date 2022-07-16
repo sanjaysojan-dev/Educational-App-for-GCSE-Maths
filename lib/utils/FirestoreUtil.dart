@@ -30,6 +30,7 @@ class FirestoreUtil {
            question.setQuestionTitle = doc["question"];
            question.setQuestionHint =  doc["hint"];
            question.setQuestionOptions = Map<String, dynamic>.from(doc["options"]);
+           question.setSolutions =  Map<String, Map<String, dynamic>>.from(doc["solutions"]);
            _questions.add(question);
          });
      } else {
