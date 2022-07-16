@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/QuestionModel.dart';
+import '../widgets/ExplanationCard.dart';
 import 'HomeScreen.dart';
 
 class QuizWorkingScreen extends StatefulWidget {
@@ -14,9 +15,21 @@ class QuizWorkingScreen extends StatefulWidget {
 
 class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
   List<QuestionModel> questions;
+
   int index = 0;
 
+  var stepWidgets = <Widget>[];
+
   _QuizWorkingScreenState(this.questions);
+
+
+  @override
+  void initState() {
+      setState(() {
+        iteratorFunction();
+
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +53,15 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
                   fontSize: 20)),
           centerTitle: true,
         ),
-        body: Stack(children: <Widget>[
+        body: Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
           SingleChildScrollView(
-            child: Container(
+
+            child: Center (child: Container(
               //padding: const EdgeInsets.symmetric(vertical: 36.0),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
 
                   //A Row’s cross axis is vertical, and a Column’s cross axis is
                   // horizontal.
@@ -53,18 +69,19 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
                   //Positions children at the middle of the cross axis.
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    for (int i = 0; i < questions[index].options.length; i++)
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(height: 20),
-                          iteratorFunction(),
+                          for (int i = 0; i < stepWidgets.length; i++)
+                            stepWidgets[i],
                           SizedBox(height: 20),
 
                           //questionExtraction()
                         ],
                       ),
                   ]),
-            ),
+            )),
           )
         ]));
   }
@@ -74,17 +91,18 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
       var sortedKeys = questions[index].solutions.keys.toList()..sort();
 
       sortedKeys.forEach((element) {
-       questions[index].solutions.forEach((key, value) {
+        questions[index].solutions.forEach((key, value) {
+          if (key == element) {
+            var sortedValues = value.keys.toList()..sort();
 
-         if (key == element){
-           var sortedValues = value.keys.toList()..sort();
+            sortedValues.forEach((sortedValue) {
+              print(value[sortedValue]);
 
-           sortedValues.forEach((sortedValue) {
-             print(value[sortedValue]);
-           });
-
-         }
-       });
+              var step = ExplanationCard(step: value[sortedValue]);
+              stepWidgets.add(step);
+            });
+          }
+        });
       });
     } catch (Exc) {
       print(Exc);
