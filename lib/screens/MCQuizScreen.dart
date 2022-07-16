@@ -150,7 +150,9 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
             builder: (ctx) => ResultsDialog(
               totalNumQuestions: _questions.length,
               score: score,
-              resetQuiz: resetQuiz,));
+              resetQuiz: resetQuiz,
+              questions: _questions,
+            ));
       } else {
         Fluttertoast.showToast(msg: "Please select an Option");
       }

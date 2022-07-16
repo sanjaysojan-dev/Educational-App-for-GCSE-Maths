@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import '../utils/FirestoreUtil.dart';
 
 class ResultsDialog extends StatelessWidget {
-  ResultsDialog({required this.totalNumQuestions, required this.score, required this.resetQuiz});
 
+  ResultsDialog({required this.totalNumQuestions, required this.score, required this.resetQuiz, required this.questions});
+
+  List<QuestionModel> questions = <QuestionModel>[];
   final int totalNumQuestions;
   final int score;
   final VoidCallback resetQuiz;
@@ -56,7 +58,7 @@ class ResultsDialog extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
-            => QuizWorkingScreen()), (route) => false);
+            => QuizWorkingScreen(questions)), (route) => false);
           },
           child: Text('Show Workings'),
         ),
