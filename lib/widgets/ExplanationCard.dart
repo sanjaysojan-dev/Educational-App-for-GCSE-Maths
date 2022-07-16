@@ -9,10 +9,12 @@ class ExplanationCard extends StatelessWidget {
 
   ExplanationCard({
     Key? key,
-    required this.step
+    required this.step,
+    required this.color,
   }) : super(key: key);
 
    final String step;
+   final Color color;
 
 
   @override
@@ -28,7 +30,7 @@ class ExplanationCard extends StatelessWidget {
               Text(step),
             ],
           ),
-          color: Colors.black26,
+          color: color,
         ));
   }
 }
