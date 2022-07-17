@@ -1,6 +1,7 @@
 class QuestionModel {
   late final String _question;
   late final String _hint;
+  late final String _image;
   late final Map<String, dynamic> _options;
   late final Map<String, Map<String, dynamic>> _solutions;
 
@@ -11,6 +12,10 @@ class QuestionModel {
 
   set setQuestionHint(String value) {
     _hint = value;
+  }
+
+  set setImage(String value) {
+    _image = value;
   }
 
   set setQuestionOptions(Map<String, dynamic> value) {
@@ -24,6 +29,8 @@ class QuestionModel {
   String get hint => _hint;
 
   String get question => _question;
+
+  String get image => _image;
 
   Map<String, dynamic> get options => _options;
 

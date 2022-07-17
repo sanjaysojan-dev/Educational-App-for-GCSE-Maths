@@ -29,6 +29,7 @@ class FirestoreUtil {
            QuestionModel question = QuestionModel();
            question.setQuestionTitle = doc["question"];
            question.setQuestionHint =  doc["hint"];
+           question.setImage = doc["image"];
            question.setQuestionOptions = Map<String, dynamic>.from(doc["options"]);
            question.setSolutions =  Map<String, Map<String, dynamic>>.from(doc["solutions"]);
            _questions.add(question);

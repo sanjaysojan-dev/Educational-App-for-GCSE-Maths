@@ -2,6 +2,7 @@ import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:educational_app_for_maths/widgets/NextQuestionButton.dart';
 import 'package:educational_app_for_maths/widgets/OptionsCard.dart';
 import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
+import 'package:educational_app_for_maths/widgets/QuestionImageCard.dart';
 import 'package:educational_app_for_maths/widgets/ResultsDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tex/flutter_tex.dart';
@@ -78,6 +79,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 QuestionCard(question: _questions[index].question),
+                QuestionImageCard(image: _questions[index].image),
                 for (int i = 0; i < _questions[index].options.length; i++)
                   Column(children: <Widget>[
                     SizedBox(height: 20),
