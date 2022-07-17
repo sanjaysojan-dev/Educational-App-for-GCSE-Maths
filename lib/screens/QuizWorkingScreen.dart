@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../models/QuestionModel.dart';
 import '../widgets/ExplanationCard.dart';
+import '../widgets/NextQuestionButton.dart';
 import '../widgets/StepTitleCard.dart';
 import 'HomeScreen.dart';
 
@@ -18,6 +18,8 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
   List<QuestionModel> questions;
 
   int index = 0;
+
+  bool onPressed = false;
 
   var stepWidgets = <Widget>[];
 
@@ -61,7 +63,12 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 20),
-                  for (int i = 0; i < stepWidgets.length; i++) stepWidgets[i],
+                  for (int i = 0; i < stepWidgets.length; i++)
+                    stepWidgets[i],
+
+
+
+                  NextQuestionButton(nextQuestion: nextIndex),
 
                   //questionExtraction()
                 ],
@@ -71,42 +78,51 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
         ]));
   }
 
+  void nextIndex() {
+    if (index != questions.length - 1) {
+      setState(() {
+        index++;
+        stepWidgets = <Widget>[];
+        iteratorFunction();
+      });
+    } else if (index == questions.length-1) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
+  }
+
   iteratorFunction() {
-    try {
-      var sortedKeys = questions[index].solutions.keys.toList()..sort();
+    var sortedKeys = questions[index].solutions.keys.toList()..sort();
 
-      sortedKeys.forEach((element) {
-        questions[index].solutions.forEach((key, value) {
-          if (key == element) {
-            var sortedValues = value.keys.toList()..sort();
+    sortedKeys.forEach((element) {
+      questions[index].solutions.forEach((key, value) {
+        if (key == element) {
+          var sortedValues = value.keys.toList()..sort();
 
-            sortedValues.forEach((sortedValue) {
-              print(value[sortedValue]);
+          sortedValues.forEach((sortedValue) {
+            print(value[sortedValue]);
 
-              if (sortedValue == 'title') {
-                var step = StepTitleCard(title: value[sortedValue]);
+            if (sortedValue == 'title') {
+              var step = StepTitleCard(title: value[sortedValue]);
+              stepWidgets.add(step);
+            } else {
+              if (sortedValue == 'value10') {
+                var step = ExplanationCard(
+                  step: value[sortedValue],
+                  color: Colors.green,
+                );
                 stepWidgets.add(step);
               } else {
-                if (sortedValue == 'value10') {
-                  var step = ExplanationCard(
-                    step: value[sortedValue],
-                    color: Colors.green,
-                  );
-                  stepWidgets.add(step);
-                } else {
-                  var step = ExplanationCard(
-                    step: value[sortedValue],
-                    color: Colors.black26,
-                  );
-                  stepWidgets.add(step);
-                }
+                var step = ExplanationCard(
+                  step: value[sortedValue],
+                  color: Colors.black26,
+                );
+                stepWidgets.add(step);
               }
-            });
-          }
-        });
+            }
+          });
+        }
       });
-    } catch (Exc) {
-      print(Exc);
-    }
+    });
   }
 }

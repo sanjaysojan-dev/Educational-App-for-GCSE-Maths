@@ -15,11 +15,15 @@ class StepTitleCard extends StatelessWidget {
         child: Row(children: <Widget>[
           Icon(Icons.lightbulb, color: Colors.amber,),
           SizedBox(width: 10,),
-          Text(
+          Flexible(child: FittedBox(
+                  child: Text(
             title,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15),
-          )
+          )))
+       
+
         ]));
   }
 }

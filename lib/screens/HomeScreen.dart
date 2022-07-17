@@ -34,14 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       });
     });
-    // firestoreUtil.getSpecificQuestions().then((value) {
-    //     setState(() {
-    //       questionStream = value;
-    //     });
-    //   });
-
-
-
     super.initState();
   }
 
