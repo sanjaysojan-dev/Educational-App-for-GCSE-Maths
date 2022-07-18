@@ -91,7 +91,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
                         )),
                   ]),
                 SizedBox(height: 20),
-                NextQuestionButton(nextQuestion: nextIndex),
+                NextQuestionButton(nextQuestion: nextIndex,buttonTitle: "Next Question "),
 
                 //questionExtraction()
               ],

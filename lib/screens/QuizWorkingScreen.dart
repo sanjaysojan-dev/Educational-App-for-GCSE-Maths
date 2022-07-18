@@ -68,7 +68,7 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
 
 
 
-                  NextQuestionButton(nextQuestion: nextIndex),
+                  NextQuestionButton(nextQuestion: nextIndex, buttonTitle: ""),
 
                   //questionExtraction()
                 ],

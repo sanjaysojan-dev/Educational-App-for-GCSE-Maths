@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import '../utils/FirestoreUtil.dart';
 
 class NextQuestionButton extends StatelessWidget {
-  NextQuestionButton({required this.nextQuestion});
+  NextQuestionButton({required this.nextQuestion, required this.buttonTitle});
 
+  final String buttonTitle;
   final VoidCallback nextQuestion;
 
   @override
@@ -16,9 +17,8 @@ class NextQuestionButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Text(
-            "Next Question ",
+        children:  <Widget>[
+          Text( this.buttonTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
