@@ -1,13 +1,13 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/models/QuestionModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+
 
 class FirestoreUtil {
 
   late List<QuestionModel> _questions = <QuestionModel>[];
+  List<QuestionModel> get questions => _questions;
+  var currentUser = FirebaseAuth.instance.currentUser;
 
 
   getQuizQuestions() async {
@@ -15,7 +15,6 @@ class FirestoreUtil {
         .collection("quiz_questions")
         .snapshots();
   }
-
 
   getSpecificQuestions(String questionID) async {
 
@@ -51,9 +50,7 @@ class FirestoreUtil {
     return db.snapshots();
   }
 
-  List<QuestionModel> get questions => _questions;
-
-
-
-
+ setScore (String questionID, String score){
+   //FirebaseFirestore.instance.collection("users/"+ FirebaseAuth.instance.currentUser!.uid +"/quizScores/"+questionID).add(score);
+ }
 }
