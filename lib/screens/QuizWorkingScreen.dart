@@ -1,3 +1,4 @@
+import 'package:educational_app_for_maths/screens/ProgressScreen.dart';
 import 'package:flutter/material.dart';
 import '../models/QuestionModel.dart';
 import '../widgets/ExplanationCard.dart';
@@ -63,10 +64,7 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 20),
-                  for (int i = 0; i < stepWidgets.length; i++)
-                    stepWidgets[i],
-
-
+                  for (int i = 0; i < stepWidgets.length; i++) stepWidgets[i],
 
                   NextQuestionButton(nextQuestion: nextIndex, buttonTitle: ""),
 
@@ -85,9 +83,9 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
         stepWidgets = <Widget>[];
         iteratorFunction();
       });
-    } else if (index == questions.length-1) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else if (index == questions.length - 1) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProgressScreen()));
     }
   }
 

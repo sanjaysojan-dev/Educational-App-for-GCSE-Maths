@@ -6,7 +6,6 @@ import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
 import 'package:educational_app_for_maths/widgets/QuestionImageCard.dart';
 import 'package:educational_app_for_maths/widgets/ResultsDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tex/flutter_tex.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../models/QuestionModel.dart';

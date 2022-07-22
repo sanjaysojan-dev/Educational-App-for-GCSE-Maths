@@ -42,7 +42,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
     final resetPasswordButton = Material(
         elevation: 5,
         borderRadius: BorderRadius.circular(30),
-        color: Colors.blueAccent,
+        color: Colors.yellow.shade600,
         child: MaterialButton(
           onPressed: () {
             passwordReset(emailController.text);
@@ -63,9 +63,9 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon:  Icon(
             Icons.arrow_back,
-            color: Colors.blueAccent,
+            color: Colors.yellow.shade600,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -100,13 +100,13 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Flexible(
                             child: Text(
                           "Type in your email address and "
                           "we'll send you an email to create a new password.",
                           style: TextStyle(
-                              color: Colors.blueAccent,
+                              color: Colors.yellow.shade600,
                               fontWeight: FontWeight.bold,
                               fontSize: 15),
                         ))
