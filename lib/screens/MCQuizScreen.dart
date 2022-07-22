@@ -1,4 +1,5 @@
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
+import 'package:educational_app_for_maths/utils/FirestoreUtil.dart';
 import 'package:educational_app_for_maths/widgets/NextQuestionButton.dart';
 import 'package:educational_app_for_maths/widgets/OptionsCard.dart';
 import 'package:educational_app_for_maths/widgets/QuestionCard.dart';
@@ -14,15 +15,20 @@ class MCQuizScreen extends StatefulWidget {
   //const MCQuizScreen({Key? key}) : super(key: key);
 
   List<QuestionModel> _questions = <QuestionModel>[];
+  String quizID = "";
 
-  MCQuizScreen(this._questions);
+  MCQuizScreen(this._questions, this.quizID);
 
   @override
-  _MCQuizScreenState createState() => _MCQuizScreenState(_questions);
+  _MCQuizScreenState createState() => _MCQuizScreenState(_questions,quizID);
 }
 
 class _MCQuizScreenState extends State<MCQuizScreen> {
+  FirestoreUtil firestoreUtil = new FirestoreUtil();
+  
   List<QuestionModel> _questions;
+
+  String quizID;
 
   int index = 0;
 
@@ -36,7 +42,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     });
   }
 
-  _MCQuizScreenState(this._questions);
+  _MCQuizScreenState(this._questions,this.quizID);
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +161,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
               resetQuiz: resetQuiz,
               questions: _questions,
             ));
+        firestoreUtil.setScore(quizID, score);
       } else {
         Fluttertoast.showToast(msg: "Please select an Option");
       }

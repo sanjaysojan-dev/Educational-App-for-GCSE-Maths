@@ -24,12 +24,12 @@ class QuizCard extends StatelessWidget {
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) =>
-                          MCQuizScreen(firestoreUtil.questions)));
+                          MCQuizScreen(firestoreUtil.questions, quizID)));
                 },
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
                     child: Container(
-                      height: 150,
+                      height: 200,
                       child:
                           Stack(alignment: Alignment.center, children: <Widget>[
                         Image.network(
