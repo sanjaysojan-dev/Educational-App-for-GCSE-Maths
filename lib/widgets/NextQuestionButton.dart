@@ -30,7 +30,7 @@ class NextQuestionButton extends StatelessWidget {
         ],
       ),
       style: ElevatedButton.styleFrom(
-        primary: Colors.yellow, // Background color
+        primary: Colors.black26, // Background color
       ),
       onPressed: nextQuestion,
     );

@@ -27,7 +27,10 @@ class ExplanationCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(step),
+              Text(step, style: TextStyle(
+                  color: Colors.black87,
+                fontWeight: FontWeight.w700
+              ),),
             ],
           ),
           color: color,

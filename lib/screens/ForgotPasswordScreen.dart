@@ -32,10 +32,14 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
+          prefixIcon: Icon(Icons.mail, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     //Reset Password Button
@@ -47,11 +51,11 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
           onPressed: () {
             passwordReset(emailController.text);
           },
-          child: const Text(
+          child:  Text(
             'RESET PASSWORD ',
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 15, color: Colors.blue.shade900, fontWeight: FontWeight.bold),
           ),
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
@@ -60,12 +64,12 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.yellow.shade700,
         elevation: 0,
         leading: IconButton(
           icon:  Icon(
             Icons.arrow_back,
-            color: Colors.yellow.shade600,
+            color: Colors.blue.shade900,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -87,11 +91,11 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Text(
                           "RESET YOUR PASSWORD",
                           style: TextStyle(
-                              color: Colors.black45,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 15),
                         )
@@ -106,7 +110,7 @@ class _ForgotPasswordState extends State<ForgotPasswordScreen> {
                           "Type in your email address and "
                           "we'll send you an email to create a new password.",
                           style: TextStyle(
-                              color: Colors.yellow.shade600,
+                              color: Colors.blue.shade900,
                               fontWeight: FontWeight.bold,
                               fontSize: 15),
                         ))

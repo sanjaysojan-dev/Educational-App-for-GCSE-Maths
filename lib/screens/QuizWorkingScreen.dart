@@ -107,13 +107,13 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
               if (sortedValue == 'value10') {
                 var step = ExplanationCard(
                   step: value[sortedValue],
-                  color: Colors.green,
+                  color: Colors.green.shade400,
                 );
                 stepWidgets.add(step);
               } else {
                 var step = ExplanationCard(
                   step: value[sortedValue],
-                  color: Colors.black26,
+                  color: Colors.white30,
                 );
                 stepWidgets.add(step);
               }

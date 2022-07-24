@@ -113,14 +113,14 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       score++;
       Fluttertoast.showToast(
           msg: "Well done! Correct Answer",
-          backgroundColor: Colors.yellow,
-          textColor: Colors.black);
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
     } else if (!_questions[index].options.values.toList()[option] &&
         onPressed == false) {
       Fluttertoast.showToast(
           msg: "Not quite right",
-          backgroundColor: Colors.yellow,
-          textColor: Colors.black);
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
     }
 
     setState(() {
@@ -131,12 +131,12 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
   Color colorPicker(int index, int option) {
     if (onPressed) {
       if (_questions[index].options.values.toList()[option] == true) {
-        return Colors.green.shade700;
+        return Colors.green.shade400;
       } else {
-        return Colors.red.shade700;
+        return Colors.red.shade400;
       }
     } else {
-      return Colors.yellow;
+      return Colors.yellow.shade400;
     }
   }
 

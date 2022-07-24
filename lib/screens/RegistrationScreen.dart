@@ -13,7 +13,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
@@ -25,7 +24,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     //Forename Field
     final forenameField = TextFormField(
       autofocus: false,
@@ -41,10 +39,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
+          prefixIcon: Icon(Icons.account_circle, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Forename",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     //Surname Field
@@ -62,10 +66,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
+          prefixIcon: Icon(Icons.account_circle, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Surname",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     //Email Field
@@ -83,10 +93,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
+          prefixIcon: Icon(Icons.mail, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     //Password Field
@@ -110,10 +126,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.key),
+          prefixIcon: Icon(Icons.key, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     //Confirmation Password Field
@@ -133,10 +155,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.password_outlined),
+          prefixIcon: Icon(Icons.password_outlined, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     // Registration Material Button
@@ -149,27 +177,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           register(
               emailEditingController.text, confirmPassEditingController.text);
         },
-        child: const Text(
+        child: Text(
           "Register",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 15,
+              color: Colors.blue.shade900,
+              fontWeight: FontWeight.bold),
         ),
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery
-            .of(context)
-            .size
-            .width,
+        minWidth: MediaQuery.of(context).size.width,
       ),
     );
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.yellow.shade700,
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.yellow),
+            icon: Icon(Icons.arrow_back, color: Colors.blue.shade900),
             onPressed: () {
               // passing this to our root
               Navigator.of(context).pop();
@@ -213,23 +240,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-
   ///A method to create new user through Firebase Authentication
   ///
   /// email: user email
   /// password: confirmed password
   void register(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password).
-      then((value) => {
-      postDataToFirestore()
-      }).catchError((e) {
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {postDataToFirestore()})
+          .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });
     }
   }
-
 
   ///A method to register user to the firestore user collection
   /// If completed successfully then application transistions to home page
@@ -244,14 +268,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     userModel.email = user!.email;
     userModel.uid = user!.uid;
-    userModel.displayName = forenameEditingController.text +" "+surnameEditingController.text;
+    userModel.displayName =
+        forenameEditingController.text + " " + surnameEditingController.text;
 
-    await firebaseFirestore.collection("users")
-        .doc(user.uid).set(userModel.toMap());
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created");
 
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
-    => HomeScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false);
   }
-
 }

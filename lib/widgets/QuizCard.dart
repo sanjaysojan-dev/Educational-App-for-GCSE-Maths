@@ -41,8 +41,8 @@ class QuizCard extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400)),
+                                color:Colors.black,
+                                fontWeight: FontWeight.w700)),
                       ]),
                     )));
             return Center(

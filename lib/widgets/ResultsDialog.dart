@@ -3,10 +3,12 @@ import 'package:educational_app_for_maths/screens/QuizWorkingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class ResultsDialog extends StatelessWidget {
-
-  ResultsDialog({required this.totalNumQuestions, required this.score, required this.resetQuiz, required this.questions});
+  ResultsDialog(
+      {required this.totalNumQuestions,
+      required this.score,
+      required this.resetQuiz,
+      required this.questions});
 
   List<QuestionModel> questions = <QuestionModel>[];
   final int totalNumQuestions;
@@ -27,8 +29,7 @@ class ResultsDialog extends StatelessWidget {
                 height: 70,
                 width: 150,
                 color: colorPicker(),
-                child: Stack(
-                    alignment: Alignment.center, children: <Widget>[
+                child: Stack(alignment: Alignment.center, children: <Widget>[
                   SizedBox(height: 50),
                   Text(score.toString() + "/" + totalNumQuestions.toString(),
                       textAlign: TextAlign.center,
@@ -36,12 +37,9 @@ class ResultsDialog extends StatelessWidget {
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.w400)),
-                ])
-
-            ),
+                ])),
           ),
           SizedBox(height: 20),
-
         ],
       ),
       actions: [
@@ -49,21 +47,25 @@ class ResultsDialog extends StatelessWidget {
           onPressed: () {
             resetQuiz();
           },
-          child: Text('Start over?', style: TextStyle(
-            color: Colors.black87
-          ),),
+          child: Text(
+            'Start over?',
+            style: TextStyle(color: Colors.black87),
+          ),
         ),
         TextButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)
-            => QuizWorkingScreen(questions)), (route) => false);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => QuizWorkingScreen(questions)),
+                (route) => false);
           },
-          child: Text('Show Workings'),
+          child: Text('Show Workings',
+              style: TextStyle(color: Colors.blue.shade900)),
         ),
       ],
     );
   }
-
 
   Color colorPicker() {
     if (score == totalNumQuestions) {
@@ -76,6 +78,4 @@ class ResultsDialog extends StatelessWidget {
     }
     return Colors.black12;
   }
-
 }
-

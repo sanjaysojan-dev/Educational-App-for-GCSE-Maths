@@ -15,7 +15,7 @@ class QuestionImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return image == "" ? Container() :
+    return image == "empty" ? Container() :
     Container(
         child:
         Image.network(

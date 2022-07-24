@@ -1,9 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/models/ChartModel.dart';
-
 import 'package:flutter/material.dart';
-
-import '../models/ScoreModel.dart';
 import '../utils/FirestoreUtil.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'HomeScreen.dart';
@@ -46,8 +42,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               ChartModel dataValue = ChartModel(
                   quiz: key,
                   score: value,
-                  barColor: value > 2
-                      ? charts.ColorUtil.fromDartColor(Colors.green)
+                  barColor: value >= 2 ? charts.ColorUtil.fromDartColor(Colors.green.shade400)
                       : charts.ColorUtil.fromDartColor(
                           Colors.deepOrangeAccent));
               data.add(dataValue);
@@ -90,7 +85,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 body: Container(
                     padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                     child: Column(children: <Widget>[
-                      Text("Quiz Progress Results"),
+                      Text("Quiz Progress Results", style: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w700
+                    ),),
                       Expanded(
                           child:
                           charts.BarChart(series, animate: true, behaviors: [

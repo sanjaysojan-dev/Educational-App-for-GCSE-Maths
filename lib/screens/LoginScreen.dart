@@ -66,7 +66,13 @@ class _LoginScreenState extends State<LoginScreen> {
           prefixIcon: Icon(Icons.mail, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
     //password field
     final password = TextFormField(
@@ -91,7 +97,13 @@ class _LoginScreenState extends State<LoginScreen> {
           prefixIcon: Icon(Icons.key, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue.shade900)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
 
     //login in Material Button
@@ -103,11 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () {
           signIn(emailController.text, passwordController.text);
         },
-        child: const Text(
+        child: Text(
           "LOGIN",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
+              fontSize: 15,
+              color: Colors.blue.shade900,
+              fontWeight: FontWeight.bold),
         ),
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -189,10 +203,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 rememberMeCheckBox,
-                                const Text(
+                                Text(
                                   "Remember Me",
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.blue.shade900,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15),
                                 )
@@ -208,10 +222,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           builder: (context) =>
                                               ForgotPasswordScreen()));
                                 },
-                                child: const Text(
+                                child: Text(
                                   "Forgot Password?",
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.blue.shade900,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15),
                                 ),
@@ -234,10 +248,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     builder: (context) =>
                                         RegistrationScreen()));
                           },
-                          child: const Text(
+                          child: Text(
                             "Signup",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.blue.shade900,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15),
                           ),
@@ -263,7 +277,6 @@ class _LoginScreenState extends State<LoginScreen> {
   /// password: user password to account
   ///
   void signIn(String email, String password) async {
-
     var preferences = SharedPreferences.getInstance();
 
     if (isChecked) {

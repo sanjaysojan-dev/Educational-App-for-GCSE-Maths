@@ -30,8 +30,8 @@ class OptionsCard extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 15,
-                    color: color == Colors.yellow ? Colors.black : Colors.white,
-                    fontWeight: FontWeight.bold),
+                    color: color == Colors.yellow.shade400? Colors.black : Colors.white,
+                    fontWeight: FontWeight.w900),
               ),
             ],
           ),
