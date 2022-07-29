@@ -24,7 +24,7 @@ class QuizCard extends StatelessWidget {
 
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) =>
-                          MCQuizScreen(firestoreUtil.questions, quizID)));
+                          MCQuizScreen(firestoreUtil.questions, title)));
                 },
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),

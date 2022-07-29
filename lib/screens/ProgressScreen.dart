@@ -40,7 +40,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
             print(firestoreUtil.userScores.getScores.length);
             firestoreUtil.userScores.getScores.forEach((key, value) {
               ChartModel dataValue = ChartModel(
-                  quiz: key,
+                  quiz: key.substring(0,10),
                   score: value,
                   barColor: value >= 2 ? charts.ColorUtil.fromDartColor(Colors.green.shade400)
                       : charts.ColorUtil.fromDartColor(

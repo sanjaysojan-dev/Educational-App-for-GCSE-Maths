@@ -7,7 +7,7 @@ class UserModel {
 
 
   UserModel ({this.uid, this.email, this.displayName}) {
-    quizScores = {"Algebra_1": 0, "Algebra_2":0, "Algebra_3":0};
+    quizScores = {"Introduction into Algebra": 0, "Algebra Continued":0, "Advanced Algebra":0};
   }
 
 // receive data from server
