@@ -27,6 +27,7 @@ class OptionsCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 option,
+                textDirection: TextDirection.ltr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 15,

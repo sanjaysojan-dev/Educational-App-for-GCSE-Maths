@@ -53,9 +53,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
               charts.Series(
                 id: "Testing",
                 data: data,
-                domainFn: (ChartModel series, _) => series.quiz,
-                measureFn: (ChartModel series, _) => series.score,
-                colorFn: (ChartModel series, _) => series.barColor,
+                domainFn: (ChartModel series, _) => series.quiz, // value of that will be on the horizontal side of the bar
+                measureFn: (ChartModel series, _) => series.score, // points to the quantity on the vertical side
+                colorFn: (ChartModel series, _) => series.barColor, // color of the bars
 
               ),
             ];

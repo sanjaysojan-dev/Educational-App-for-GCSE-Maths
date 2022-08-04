@@ -24,6 +24,7 @@ class QuestionCard extends StatelessWidget {
                         padding: const EdgeInsets.all(36.0),
                         child: Column(children: <Widget>[
                           Text(question,
+                              textDirection: TextDirection.ltr,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 18,

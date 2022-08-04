@@ -6,16 +6,14 @@ import 'package:flutter/material.dart';
 import '../utils/FirestoreUtil.dart';
 
 class ExplanationCard extends StatelessWidget {
-
   ExplanationCard({
     Key? key,
     required this.step,
     required this.color,
   }) : super(key: key);
 
-   final String step;
-   final Color color;
-
+  final String step;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +25,14 @@ class ExplanationCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(step, style: TextStyle(
+              Text(
+                step,
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
                   color: Colors.black87,
-                fontWeight: FontWeight.w700
-              ),),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ],
           ),
           color: color,
