@@ -12,6 +12,26 @@ class FirestoreUtil {
 
 
 
+
+  ///A method to check if Googled Signed in user has already been registed
+  ///in the user firestore collection
+  ///
+  /// collection: collection that needs to be accessed
+  /// document: the document that needs to be accessed
+  ///
+  /// Returns a boolean variable: True if document exists, false otherwise
+  static Future<bool>  checkIfDocExists(String collection, String document) async {
+    try {
+      var collectionRef = FirebaseFirestore.instance.collection(collection);
+      var doc = await collectionRef.doc(document).get();
+      print(doc.exists);
+      return doc.exists;
+    } on FirebaseAuthException catch (e) {
+      return false;
+    }
+  }
+
+
   getQuizQuestions() async {
     return await FirebaseFirestore.instance
         .collection("quiz_questions")
@@ -65,6 +85,6 @@ class FirestoreUtil {
 
     return db.snapshots();
 
-
   }
+
 }

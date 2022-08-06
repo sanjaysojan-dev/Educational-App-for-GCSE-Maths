@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/UserModel.dart';
+import '../utils/FirestoreUtil.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -183,11 +184,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   //Positions children at the middle of the cross axis.
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: Image.asset(''
-                    //   , fit: BoxFit.contain
-                    //   )),
 
                     //A box with a specified size. - If given a child, this widget
                     // forces it to have a specific width and/or height.
@@ -339,7 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .where("email", isEqualTo: user!.email)
           .get();
 
-      if (await checkIfDocExists("users", user!.uid) == false) {
+      if (await FirestoreUtil.checkIfDocExists("users", user!.uid) == false) {
         UserModel userModel = UserModel();
         userModel.email = user!.email;
         userModel.uid = user!.uid;
@@ -355,23 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  ///A method to check if Googled Signed in user has already been registed
-  ///in the user firestore collection
-  ///
-  /// collection: collection that needs to be accessed
-  /// document: the document that needs to be accessed
-  ///
-  /// Returns a boolean variable: True if document exists, false otherwise
-  Future<bool> checkIfDocExists(String collection, String document) async {
-    try {
-      var collectionRef = FirebaseFirestore.instance.collection(collection);
-      var doc = await collectionRef.doc(document).get();
-      print(doc.exists);
-      return doc.exists;
-    } on FirebaseAuthException catch (e) {
-      return false;
-    }
-  }
+
 
   ///A method to set user login details to shared preferences
   ///Sets value of isChecked

@@ -15,8 +15,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 //import 'package:image_test_utils/image_test_utils.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 
 void main() {
+
   ///Test function to test whether ExplanationCard loads accordingly
   testWidgets('ExplanationCard Test', (WidgetTester tester) async {
     // Builds widget
@@ -57,7 +59,7 @@ void main() {
 
   ///Test function to test whether QuestionImageCard loads accordingly
   testWidgets(
-    'should properly mock Image.network and not crash',
+    'QuestionImageCard test',
     (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp(
           home: QuestionImageCard(
