@@ -105,7 +105,6 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
           var sortedValues = value.keys.toList()..sort();
 
           sortedValues.forEach((sortedValue) {
-            print(value[sortedValue]);
 
             if (sortedValue == 'title') {
               var step = StepTitleCard(title: value[sortedValue]);
