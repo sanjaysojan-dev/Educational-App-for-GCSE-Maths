@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:educational_app_for_maths/models/UserModel.dart';
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -17,13 +15,19 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final auth = FirebaseAuth.instance;
+
   FirestoreUtil firestoreUtil = new FirestoreUtil();
+
   final _formKey = GlobalKey<FormState>();
 
   final forenameEditingController = new TextEditingController();
+
   final surnameEditingController = new TextEditingController();
+
   final emailEditingController = new TextEditingController();
+
   final passwordEditingController = new TextEditingController();
+
   final confirmPassEditingController = new TextEditingController();
 
   @override

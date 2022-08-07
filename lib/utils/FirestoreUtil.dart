@@ -3,15 +3,17 @@ import 'package:educational_app_for_maths/models/QuestionModel.dart';
 import 'package:educational_app_for_maths/models/ScoreModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../models/UserModel.dart';
 
 class FirestoreUtil {
   late List<QuestionModel> _questions = <QuestionModel>[];
 
   List<QuestionModel> get questions => _questions;
+
   ScoreModel userScores =  ScoreModel();
+
   final _auth = FirebaseAuth.instance;
+
   var currentUser = FirebaseAuth.instance.currentUser;
 
 
@@ -32,7 +34,6 @@ class FirestoreUtil {
       return false;
     }
   }
-
 
 
   ///A method to register user to the firestore user collection
@@ -59,14 +60,22 @@ class FirestoreUtil {
 
   }
 
-
+  ///A method to obtain the quiz topic available in Firestore
+  ///
+  /// Returns query snapshot
   getQuizTopics() async {
     return await FirebaseFirestore.instance
         .collection("quiz_questions")
         .snapshots();
   }
 
-
+  ///A method to retrieve all questions for a selected topic.
+  ///The questions are mapped to a model and stored in a
+  ///questions List.
+  ///
+  /// questionID: selected question ID
+  ///
+  /// Returns query snapshot
   getTopicQuestions(String questionID) async {
     var db = await FirebaseFirestore.instance
         .collection("quiz_questions/" + questionID + "/questions");
@@ -91,18 +100,20 @@ class FirestoreUtil {
     return db.snapshots();
   }
 
-
-  setScore(String questionID, int score) {
+  /// A method to set the score of the quiz.
+  ///
+  /// questionsID
+  setScore(String quizTopicID, int score) {
     try {
       FirebaseFirestore.instance
           .doc("users/" + currentUser!.uid)
-          .update({"quiz_scores." + questionID: score});
+          .update({"quiz_scores." + quizTopicID: score});
     } on FirebaseException catch (e) {
       print(e);
     }
   }
 
-
+///Obtains the score of the user for all quiz attempts
   getScores() async {
     var db = await FirebaseFirestore.instance.doc("users/" + currentUser!.uid);
     db.get().then((value) => {

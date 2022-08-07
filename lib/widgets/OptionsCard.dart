@@ -1,9 +1,5 @@
-import 'package:educational_app_for_maths/models/QuestionModel.dart';
-import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/FirestoreUtil.dart';
 
 class OptionsCard extends StatelessWidget {
   const OptionsCard({
@@ -12,7 +8,10 @@ class OptionsCard extends StatelessWidget {
     required this.color,
   }) : super(key: key);
 
+  //Title of option
   final String option;
+
+  //Colour of option depending on selection
   final Color color;
 
   @override

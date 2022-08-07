@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class StepTitleCard extends StatelessWidget {
   StepTitleCard({Key? key, required this.title}) : super(key: key);
 
+  //Title of solution step
   final String title;
 
   @override

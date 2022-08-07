@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:educational_app_for_maths/models/UserModel.dart';
 import 'package:educational_app_for_maths/screens/LoginScreen.dart';
 import 'package:educational_app_for_maths/widgets/QuizCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,16 +15,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _googleSignIn = GoogleSignIn();
-  var userName = Text("");
-  var userEmail = Text("");
 
-  User? user = FirebaseAuth.instance.currentUser;
-  UserModel userModel = UserModel();
+  final _googleSignIn = GoogleSignIn();
 
   FirestoreUtil firestoreUtil = new FirestoreUtil();
+
   Stream? quizStream;
-  Stream? questionStream;
 
   @override
   void initState() {
@@ -60,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(
-              onSelected: (item) => selectedTab(context, item),
+              onSelected: (item) => selectionTab(context, item),
               itemBuilder: (context) =>
                   [PopupMenuItem<int>(value: 0, child: Text("Sign Out", style: TextStyle(color: Colors.blue.shade900, fontWeight: FontWeight.bold),)),
                     PopupMenuItem<int>(value: 1, child: Text("Delete Account", style: TextStyle(color: Colors.blue.shade900, fontWeight: FontWeight.bold)))
@@ -103,6 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// A method to log out user from application
+  ///
+  /// context: link to widget tree
+  /// Returns a Future due to async method
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     await _googleSignIn.signOut();
@@ -117,6 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
         (route) => false);
   }
 
+  /// A method to delete user account
+  ///
+  /// context: link to widget tree
+  ///  Returns a Future due to async method
   Future<void> deleteAccount(BuildContext context) async {
     try {
 
@@ -130,12 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
           .delete();
 
       await FirebaseAuth.instance.currentUser!.delete();
+
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
               (route) => false);
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
+
         print('The user must reauthenticate before this operation can be executed.');
       }
     }
@@ -143,7 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-  void selectedTab(BuildContext context, int item) {
+  /// A method to select method based on popupmenu item selection.
+  ///
+  /// item: selected menu number
+  void selectionTab(BuildContext context, int item) {
     switch (item) {
       case 0:
         logout(context);

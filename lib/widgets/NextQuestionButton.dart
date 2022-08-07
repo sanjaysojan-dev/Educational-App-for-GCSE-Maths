@@ -1,14 +1,13 @@
-import 'package:educational_app_for_maths/models/QuestionModel.dart';
-import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/FirestoreUtil.dart';
 
 class NextQuestionButton extends StatelessWidget {
   NextQuestionButton({required this.nextQuestion, required this.buttonTitle});
 
+  //Title of button
   final String buttonTitle;
+
+  //Next Question
   final VoidCallback nextQuestion;
 
   @override

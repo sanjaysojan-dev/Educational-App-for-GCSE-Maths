@@ -6,22 +6,27 @@ class QuestionModel {
   late final Map<String, Map<String, dynamic>> _solutions;
 
 
+  ///Sets question title
   set setQuestionTitle(String value) {
     _question = value;
   }
 
+  ///Sets the question hint
   set setQuestionHint(String value) {
     _hint = value;
   }
 
+  ///Sets the image location
   set setImage(String value) {
     _image = value;
   }
 
+  ///Maps option stream and its value to map
   set setQuestionOptions(Map<String, dynamic> value) {
     _options = value;
   }
 
+  ///Maps value of solutions
   set setSolutions(Map<String, Map<String, dynamic>> value) {
     _solutions = value;
   }

@@ -7,6 +7,8 @@ import '../widgets/StepTitleCard.dart';
 import 'HomeScreen.dart';
 
 class QuizWorkingScreen extends StatefulWidget {
+
+  //A list to store the questions of the Topic
   List<QuestionModel> questions = <QuestionModel>[];
 
   QuizWorkingScreen(this.questions);
@@ -26,12 +28,14 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
 
   _QuizWorkingScreenState(this.questions);
 
+ ///Orders the order of solution values
   @override
   void initState() {
     setState(() {
-      iteratorFunction();
+      keyValueSolutionSort();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +80,13 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
         ]));
   }
 
+  ///A method to increment counter and update the solution
   void nextIndex() {
     if (index != questions.length - 1) {
       setState(() {
         index++;
         stepWidgets = <Widget>[];
-        iteratorFunction();
+        keyValueSolutionSort();
       });
     } else if (index == questions.length - 1) {
       Navigator.push(
@@ -89,7 +94,9 @@ class _QuizWorkingScreenState extends State<QuizWorkingScreen> {
     }
   }
 
-  iteratorFunction() {
+  /// A method that iterates through the solution of each
+  /// questions to then create
+  keyValueSolutionSort() {
     var sortedKeys = questions[index].solutions.keys.toList()..sort();
 
     sortedKeys.forEach((element) {

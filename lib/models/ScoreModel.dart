@@ -4,6 +4,7 @@ class ScoreModel {
 
   Map<String, dynamic> get getScores => _scores;
 
+  ///A method to set user scores to map
   set setScores(Map<String, dynamic> value) {
     _scores = value;
   }

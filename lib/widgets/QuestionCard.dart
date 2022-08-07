@@ -1,9 +1,5 @@
-import 'package:educational_app_for_maths/models/QuestionModel.dart';
-import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/FirestoreUtil.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard(
@@ -11,6 +7,7 @@ class QuestionCard extends StatelessWidget {
       required this.question,})
       : super(key: key);
 
+  //Title of question
   final String question;
 
   @override
@@ -33,6 +30,5 @@ class QuestionCard extends StatelessWidget {
                         ])
                     ))
             ));
-
   }
 }

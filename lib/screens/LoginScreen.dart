@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //Google Sign in Instance
   final _googleSignIn = GoogleSignIn();
 
+  //Terms and Condition Text Span
   final _termsAndConditions = Text.rich(TextSpan(
       text: "By signing up, you agree to the ",
       style: TextStyle(color: Colors.blue.shade900, fontSize: 10),
@@ -60,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     //email field
     final email = TextFormField(
       autofocus: false,
@@ -69,11 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
         if (value!.isEmpty) {
           return "Please enter your email";
         }
-
-        //Checking if input conforms to regular expression
-        // if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)){
-        //   return "Please enter a valid email";
-        // }
       },
       onSaved: (value) {
         emailController.text = value!;
@@ -91,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.blue.shade900, width: 2.5))),
     );
+
     //password field
     final password = TextFormField(
       autofocus: false,
@@ -166,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return Colors.yellow.shade700;
     }
 
+    //Checkbox to remember login details
     final rememberMeCheckBox = Checkbox(
       checkColor: Colors.white,
       fillColor: MaterialStateProperty.resolveWith(getColor),

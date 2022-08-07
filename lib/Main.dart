@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Email and Password Login',
+      title: 'Educational Maths App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

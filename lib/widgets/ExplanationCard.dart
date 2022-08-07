@@ -1,9 +1,5 @@
-import 'package:educational_app_for_maths/models/QuestionModel.dart';
-import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/FirestoreUtil.dart';
 
 class ExplanationCard extends StatelessWidget {
   ExplanationCard({
@@ -12,7 +8,10 @@ class ExplanationCard extends StatelessWidget {
     required this.color,
   }) : super(key: key);
 
+  //Explanation of step
   final String step;
+
+  //Colour of explanation card
   final Color color;
 
   @override

@@ -13,6 +13,8 @@ class QuizCard extends StatelessWidget {
 
   QuizCard({required this.title, required this.quizID, required this.imageURL});
 
+
+  /// Widget builder uses FutureBuilder to wait for topic questions be returned
   @override
   Widget build(BuildContext context) => FutureBuilder(
         future: firestoreUtil.getTopicQuestions(quizID),
@@ -20,8 +22,6 @@ class QuizCard extends StatelessWidget {
           if (snapshot.hasData) {
             return GestureDetector(
                 onTap: () async {
-                  //firestoreUtil.getSpecificQuestions(quizID);
-
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) =>
                           MCQuizScreen(firestoreUtil.questions, title)));
@@ -48,8 +48,6 @@ class QuizCard extends StatelessWidget {
             return Center(
                 child: Container(child: Text('hasData: ${snapshot.data}')));
           } else {
-            // We can show the loading view until the data comes back.
-            debugPrint('Step 1, build loading widget');
             return Center (child:
             SizedBox(
                 child: CircularProgressIndicator(),

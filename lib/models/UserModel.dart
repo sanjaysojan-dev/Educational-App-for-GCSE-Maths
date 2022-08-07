@@ -5,12 +5,12 @@ class UserModel {
   String? displayName;
   Map<String, int>? quizScores;
 
-
+  ///Constructor - instantiates users with 0 scores for all quizes
   UserModel ({this.uid, this.email, this.displayName}) {
     quizScores = {"Introduction into Algebra": 0, "Algebra Continued":0, "Advanced Algebra":0};
   }
 
-// receive data from server
+/// A method to get user data
   factory UserModel.fromMap(map){
     return UserModel(
       uid: map['uid'],
@@ -19,7 +19,7 @@ class UserModel {
     );
   }
 
-  // send data to server
+  /// A method to set user data
   Map<String, dynamic> toMap (){
     return {
       'uid': uid,

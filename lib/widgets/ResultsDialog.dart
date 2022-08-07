@@ -48,7 +48,7 @@ class ResultsDialog extends StatelessWidget {
             resetQuiz();
           },
           child: Text(
-            'Start over?',
+            'Replay?',
             style: TextStyle(color: Colors.black87),
           ),
         ),
@@ -60,13 +60,15 @@ class ResultsDialog extends StatelessWidget {
                     builder: (context) => QuizWorkingScreen(questions)),
                 (route) => false);
           },
-          child: Text('Show Workings',
+          child: Text('Show Solutions',
               style: TextStyle(color: Colors.blue.shade900)),
         ),
       ],
     );
   }
 
+  /// A method to select the color based on the score
+  /// of the user
   Color colorPicker() {
     if (score == totalNumQuestions) {
       return Colors.green;

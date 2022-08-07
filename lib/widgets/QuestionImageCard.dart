@@ -1,9 +1,5 @@
-import 'package:educational_app_for_maths/models/QuestionModel.dart';
-import 'package:educational_app_for_maths/screens/MCQuizScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/FirestoreUtil.dart';
 
 class QuestionImageCard extends StatelessWidget {
   const QuestionImageCard({
@@ -11,8 +7,10 @@ class QuestionImageCard extends StatelessWidget {
     required this.image,
   }) : super(key: key);
 
+  //Online link to image
   final String image;
 
+  //If question has no image then empty container is returned
   @override
   Widget build(BuildContext context) {
     return image == "empty" ? Container() :

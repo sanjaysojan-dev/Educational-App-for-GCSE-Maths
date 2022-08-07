@@ -7,13 +7,14 @@ import 'package:educational_app_for_maths/widgets/QuestionImageCard.dart';
 import 'package:educational_app_for_maths/widgets/ResultsDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../models/QuestionModel.dart';
 
 class MCQuizScreen extends StatefulWidget {
-  //const MCQuizScreen({Key? key}) : super(key: key);
 
+  //List to store questions of quiz topic
   List<QuestionModel> _questions = <QuestionModel>[];
+
+  //Quiz ID
   String quizID = "";
 
   MCQuizScreen(this._questions, this.quizID);
@@ -35,13 +36,15 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
 
   bool onPressed = false;
 
+  _MCQuizScreenState(this._questions,this.quizID);
+
+
+  ///Sets state of onPressed for option selected
   onSelection() {
     setState(() {
       onPressed = true;
     });
   }
-
-  _MCQuizScreenState(this._questions,this.quizID);
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +110,14 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     );
   }
 
+
+  /// A method to calculate the score based on the
+  /// option selected by the user. If the selected option
+  /// is false score is not updated. Sets the state of
+  /// the application to true.
+  ///
+  /// index: position of the question in list
+  /// option: selected option
   scoreCalculation(int index, int option) {
     if (_questions[index].options.values.toList()[option] &&
         onPressed == false) {
@@ -128,6 +139,14 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     });
   }
 
+  /// A method to select the color based on the
+  /// option selected by the user. If the selected option
+  /// is false then the colour red is return otherwise,
+  /// green. If no option is selected then colour yellow
+  /// remains.
+  ///
+  /// index: position of the question in list
+  /// option: selected option
   Color colorPicker(int index, int option) {
     if (onPressed) {
       if (_questions[index].options.values.toList()[option] == true) {
@@ -140,6 +159,8 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     }
   }
 
+  ///A method to increment counter and update question.
+  ///Checks to see if the an option has been selected.
   void nextIndex() {
     if (index != _questions.length - 1) {
       if (onPressed) {
@@ -167,6 +188,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
     }
   }
 
+  /// A method to reset counter and quiz state.
   void resetQuiz(){
     setState(() {
       onPressed = false;

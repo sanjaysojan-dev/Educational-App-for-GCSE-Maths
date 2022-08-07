@@ -12,14 +12,16 @@ class ProgressScreen extends StatefulWidget {
 class _ProgressScreenState extends State<ProgressScreen> {
   FirestoreUtil firestoreUtil = new FirestoreUtil();
 
-  var testWidgets = <Widget>[];
-
+  //List to store data for chart model
   List<ChartModel> data = <ChartModel>[];
+
+  //List to store series data for chart model
   List<charts.Series<ChartModel, String>> series =
-      <charts.Series<ChartModel, String>>[];
+  <charts.Series<ChartModel, String>>[];
 
   Stream? scores;
 
+  ///Obtains the score of the users.
   @override
   void initState() {
     firestoreUtil.getScores().then((value) {
@@ -35,28 +37,27 @@ class _ProgressScreenState extends State<ProgressScreen> {
         future: firestoreUtil.getScores(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            //firestoreUtil.getScores();
-
-            print(firestoreUtil.userScores.getScores.length);
             firestoreUtil.userScores.getScores.forEach((key, value) {
               ChartModel dataValue = ChartModel(
-                  quiz: key.substring(0,10),
+                  quiz: key.substring(0, 10),
                   score: value,
-                  barColor: value >= 2 ? charts.ColorUtil.fromDartColor(Colors.green.shade400)
+                  barColor: value >= 2
+                      ? charts.ColorUtil.fromDartColor(Colors.green.shade400)
                       : charts.ColorUtil.fromDartColor(
                           Colors.deepOrangeAccent));
               data.add(dataValue);
-              print(key);
             });
 
             series = [
               charts.Series(
-                id: "Testing",
+                id: "Quiz Progress",
                 data: data,
-                domainFn: (ChartModel series, _) => series.quiz, // value of that will be on the horizontal side of the bar
-                measureFn: (ChartModel series, _) => series.score, // points to the quantity on the vertical side
-                colorFn: (ChartModel series, _) => series.barColor, // color of the bars
-
+                domainFn: (ChartModel series, _) => series.quiz,
+                // value of that will be on the horizontal side of the bar
+                measureFn: (ChartModel series, _) => series.score,
+                // points to the quantity on the vertical side
+                colorFn: (ChartModel series, _) =>
+                    series.barColor, // color of the bars
               ),
             ];
 
@@ -65,7 +66,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 appBar: AppBar(
                   backgroundColor: Colors.yellow.shade700,
                   leading: IconButton(
-                      icon: Icon(Icons.arrow_back, color:Colors.blue.shade900),
+                      icon: Icon(Icons.arrow_back, color: Colors.blue.shade900),
                       onPressed: () {
                         // passing this to our root
                         Navigator.pushAndRemoveUntil(
@@ -85,28 +86,28 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 body: Container(
                     padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                     child: Column(children: <Widget>[
-                      Text("Quiz Progress Results", style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w700
-                    ),),
+                      Text(
+                        "Quiz Progress Results",
+                        style: TextStyle(
+                            color: Colors.black87, fontWeight: FontWeight.w700),
+                      ),
                       Expanded(
-                          child:
-                          charts.BarChart(series, animate: true, behaviors: [
-                            new charts.ChartTitle('Quizzes',
-                                behaviorPosition: charts.BehaviorPosition.bottom,
-                                titleOutsideJustification:
-                                charts.OutsideJustification.middleDrawArea),
-                            new charts.ChartTitle('Score',
-                                behaviorPosition: charts.BehaviorPosition.start,
-                                titleOutsideJustification:
-                                charts.OutsideJustification.middleDrawArea),
-                          ],)),
+                          child: charts.BarChart(
+                        series,
+                        animate: true,
+                        behaviors: [
+                          new charts.ChartTitle('Quizzes',
+                              behaviorPosition: charts.BehaviorPosition.bottom,
+                              titleOutsideJustification:
+                                  charts.OutsideJustification.middleDrawArea),
+                          new charts.ChartTitle('Score',
+                              behaviorPosition: charts.BehaviorPosition.start,
+                              titleOutsideJustification:
+                                  charts.OutsideJustification.middleDrawArea),
+                        ],
+                      )),
                     ])));
-            return Center(
-                child: Container(child: Text('hasData: ${snapshot.data}')));
           } else {
-            // We can show the loading view until the data comes back.
-            debugPrint('Step 1, build loading widget');
             return Center(
                 child: SizedBox(
               child: CircularProgressIndicator(),
