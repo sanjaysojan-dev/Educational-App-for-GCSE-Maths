@@ -3,6 +3,7 @@ import 'package:educational_app_for_maths/screens/ForgotPasswordScreen.dart';
 import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -34,6 +35,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //Google Sign in Instance
   final _googleSignIn = GoogleSignIn();
+
+  final _termsAndConditions = Text.rich(TextSpan(
+      text: "By signing up, you agree to the ",
+      style: TextStyle(color: Colors.blue.shade900, fontSize: 10),
+      children: <TextSpan>[
+        TextSpan(
+            text: "Terms and Conditions",
+            style: TextStyle(
+                color: Colors.blue.shade900,
+                fontWeight: FontWeight.bold,
+                fontSize: 10,
+                decoration: TextDecoration.underline),
+            recognizer:  new TapGestureRecognizer()..onTap = (){})
+      ]));
 
   bool isChecked = false;
 
@@ -255,7 +270,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     SizedBox(height: 30),
-                    googleSignInButton
+                    googleSignInButton,
+                    SizedBox(height: 120),
+                    Center(child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [Flexible(child: _termsAndConditions)]))
                   ],
                 ),
               ),
@@ -300,27 +318,27 @@ class _LoginScreenState extends State<LoginScreen> {
   ///A method to sign through the Google Sign in interface
   void signInWithGoogle() async {
     try {
-        final GoogleSignInAccount? googleSignInAccount =
-            await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
 
-        //since Google Sign In Account can be nullable you conduct a check
-        if (googleSignInAccount != null) {
-          //
-          final GoogleSignInAuthentication googleSignInAuthentication =
-              await googleSignInAccount.authentication;
+      //since Google Sign In Account can be nullable you conduct a check
+      if (googleSignInAccount != null) {
+        //
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
 
-          //
-          final AuthCredential authCredential = GoogleAuthProvider.credential(
-              accessToken: googleSignInAuthentication.accessToken,
-              idToken: googleSignInAuthentication.idToken);
-          //
-          await _auth.signInWithCredential(authCredential);
+        //
+        final AuthCredential authCredential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken);
+        //
+        await _auth.signInWithCredential(authCredential);
 
-          registerGoogleUser();
+        registerGoogleUser();
 
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomeScreen()));
-        }
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e!.message.toString());
     }
@@ -363,14 +381,11 @@ class _LoginScreenState extends State<LoginScreen> {
         preference.setString("email", emailController.text);
         preference.setString("password", passwordController.text);
       });
-
     } else {
       SharedPreferences.getInstance().then((preference) {
         preference.clear();
       });
     }
-
-
 
     setState(() {
       isChecked = value;
@@ -389,7 +404,6 @@ class _LoginScreenState extends State<LoginScreen> {
         isChecked = true;
         emailController.text = preferences.getString("email").toString();
         passwordController.text = preferences.getString("password").toString();
-
       });
     }
   }

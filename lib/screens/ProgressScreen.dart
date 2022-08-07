@@ -65,7 +65,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 appBar: AppBar(
                   backgroundColor: Colors.yellow.shade700,
                   leading: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.black),
+                      icon: Icon(Icons.arrow_back, color:Colors.blue.shade900),
                       onPressed: () {
                         // passing this to our root
                         Navigator.pushAndRemoveUntil(

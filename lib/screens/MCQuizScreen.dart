@@ -49,7 +49,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       appBar: AppBar(
         backgroundColor: Colors.yellow.shade700,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: Icon(Icons.arrow_back, color: Colors.blue.shade900),
             onPressed: () {
               // passing this to our root
               Navigator.push(context,
@@ -58,7 +58,7 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
         actions: [
           IconButton(
               icon: Icon(Icons.help),
-              color: Colors.black,
+              color: Colors.blue.shade900,
               onPressed: () {
                 Fluttertoast.showToast(msg: _questions[index].hint);
               })
@@ -113,13 +113,13 @@ class _MCQuizScreenState extends State<MCQuizScreen> {
       score++;
       Fluttertoast.showToast(
           msg: "Well done! Correct Answer",
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue.shade900,
           textColor: Colors.white);
     } else if (!_questions[index].options.values.toList()[option] &&
         onPressed == false) {
       Fluttertoast.showToast(
           msg: "Not quite right",
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue.shade900,
           textColor: Colors.white);
     }
 

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/models/UserModel.dart';
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -194,6 +195,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
 
+    final _termsAndConditions = Text.rich(TextSpan(
+        text: "By signing up, you agree to the ",
+        style: TextStyle(color: Colors.blue.shade900, fontSize: 10),
+        children: <TextSpan>[
+          TextSpan(
+              text: "Terms and Conditions",
+              style: TextStyle(
+                  color: Colors.blue.shade900,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10,
+                  decoration: TextDecoration.underline),
+              recognizer:  new TapGestureRecognizer()..onTap = (){})
+        ]));
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -234,7 +249,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       SizedBox(height: 25),
                       confirmPasswordField,
                       SizedBox(height: 25),
-                      registrationButton
+                      registrationButton,
+                      SizedBox(height: 70),
+                      Center(child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Flexible(child: _termsAndConditions)]))
                     ],
                   )),
             ),

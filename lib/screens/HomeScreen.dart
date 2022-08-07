@@ -43,13 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow.shade700,
-        title: Text("GCSE Maths Educational App",
+        title: Text("GCSE Maths App",
             style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w600,
             fontSize: 20)),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: Icon(Icons.arrow_back, color: Colors.blue.shade900),
             onPressed: () {
               // passing this to our root
               Navigator.pushAndRemoveUntil(
@@ -62,8 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
           PopupMenuButton<int>(
               onSelected: (item) => selectedTab(context, item),
               itemBuilder: (context) =>
-                  [PopupMenuItem<int>(value: 0, child: Text("Sign Out")),
-                    PopupMenuItem<int>(value: 1, child: Text("Delete Account"))
+                  [PopupMenuItem<int>(value: 0, child: Text("Sign Out", style: TextStyle(color: Colors.blue.shade900, fontWeight: FontWeight.bold),)),
+                    PopupMenuItem<int>(value: 1, child: Text("Delete Account", style: TextStyle(color: Colors.blue.shade900, fontWeight: FontWeight.bold)))
                   ])
         ],
       ),
