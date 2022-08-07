@@ -15,7 +15,7 @@ class QuizCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-        future: firestoreUtil.getSpecificQuestions(quizID),
+        future: firestoreUtil.getTopicQuestions(quizID),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return GestureDetector(

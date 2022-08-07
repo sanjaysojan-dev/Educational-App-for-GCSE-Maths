@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:educational_app_for_maths/models/QuestionModel.dart';
 import 'package:educational_app_for_maths/models/ScoreModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../models/UserModel.dart';
 
 class FirestoreUtil {
   late List<QuestionModel> _questions = <QuestionModel>[];
 
   List<QuestionModel> get questions => _questions;
   ScoreModel userScores =  ScoreModel();
+  final _auth = FirebaseAuth.instance;
   var currentUser = FirebaseAuth.instance.currentUser;
-
-
 
 
   ///A method to check if Googled Signed in user has already been registed
@@ -32,13 +34,40 @@ class FirestoreUtil {
   }
 
 
-  getQuizQuestions() async {
+
+  ///A method to register user to the firestore user collection
+  /// If completed successfully then application transistions to home page
+  Future postDataToFirestore(String forename, String surname) async {
+    // calls firestore
+    // calls user model
+    // sending value
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.uid = user!.uid;
+    userModel.displayName =
+        forename + " " + surname;
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(msg: "Account created");
+
+  }
+
+
+  getQuizTopics() async {
     return await FirebaseFirestore.instance
         .collection("quiz_questions")
         .snapshots();
   }
 
-  getSpecificQuestions(String questionID) async {
+
+  getTopicQuestions(String questionID) async {
     var db = await FirebaseFirestore.instance
         .collection("quiz_questions/" + questionID + "/questions");
 
@@ -62,6 +91,7 @@ class FirestoreUtil {
     return db.snapshots();
   }
 
+
   setScore(String questionID, int score) {
     try {
       FirebaseFirestore.instance
@@ -72,19 +102,13 @@ class FirestoreUtil {
     }
   }
 
+
   getScores() async {
-
     var db = await FirebaseFirestore.instance.doc("users/" + currentUser!.uid);
-    //userScores = ScoreModel();
-
     db.get().then((value) => {
-
       userScores.setScores = Map<String, dynamic>.from(value.get("quiz_scores"))
-
     });
-
     return db.snapshots();
-
   }
 
 }

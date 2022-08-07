@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../utils/FirestoreUtil.dart';
+
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
@@ -14,6 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final auth = FirebaseAuth.instance;
+  FirestoreUtil firestoreUtil = new FirestoreUtil();
   final _formKey = GlobalKey<FormState>();
 
   final forenameEditingController = new TextEditingController();
@@ -155,7 +158,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.password_outlined, color: Colors.yellow.shade600),
+          prefixIcon:
+              Icon(Icons.password_outlined, color: Colors.yellow.shade600),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -174,7 +178,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       color: Colors.yellow,
       child: MaterialButton(
         onPressed: () {
-          register(
+          registerAccount(
               emailEditingController.text, confirmPassEditingController.text);
         },
         child: Text(
@@ -244,42 +248,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   ///
   /// email: user email
   /// password: confirmed password
-  void register(String email, String password) async {
+  void registerAccount(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {postDataToFirestore()})
+          .then((value) async => {
+                await firestoreUtil.postDataToFirestore(
+                    forenameEditingController.text,
+                    surnameEditingController.text),
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    (route) => false)
+              })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });
     }
-  }
-
-  ///A method to register user to the firestore user collection
-  /// If completed successfully then application transistions to home page
-  void postDataToFirestore() async {
-    // calls firestore
-    // calls user model
-    // sending value
-
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = auth.currentUser;
-    UserModel userModel = UserModel();
-
-    userModel.email = user!.email;
-    userModel.uid = user!.uid;
-    userModel.displayName =
-        forenameEditingController.text + " " + surnameEditingController.text;
-
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created");
-
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
   }
 }

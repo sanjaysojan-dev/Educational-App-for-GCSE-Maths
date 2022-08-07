@@ -3,6 +3,7 @@ import 'package:educational_app_for_maths/screens/ForgotPasswordScreen.dart';
 import 'package:educational_app_for_maths/screens/RegistrationScreen.dart';
 import 'package:educational_app_for_maths/screens/HomeScreen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -184,7 +185,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   //Positions children at the middle of the cross axis.
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-
                     //A box with a specified size. - If given a child, this widget
                     // forces it to have a specific width and/or height.
                     SizedBox(height: 45),
@@ -300,26 +300,27 @@ class _LoginScreenState extends State<LoginScreen> {
   ///A method to sign through the Google Sign in interface
   void signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+        final GoogleSignInAccount? googleSignInAccount =
+            await _googleSignIn.signIn();
 
-      //since Google Sign In Account can be nullable you conduct a check
-      if (googleSignInAccount != null) {
-        //
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
+        //since Google Sign In Account can be nullable you conduct a check
+        if (googleSignInAccount != null) {
+          //
+          final GoogleSignInAuthentication googleSignInAuthentication =
+              await googleSignInAccount.authentication;
 
-        //
-        final AuthCredential authCredential = GoogleAuthProvider.credential(
-            accessToken: googleSignInAuthentication.accessToken,
-            idToken: googleSignInAuthentication.idToken);
-        //
-        await _auth.signInWithCredential(authCredential);
+          //
+          final AuthCredential authCredential = GoogleAuthProvider.credential(
+              accessToken: googleSignInAuthentication.accessToken,
+              idToken: googleSignInAuthentication.idToken);
+          //
+          await _auth.signInWithCredential(authCredential);
 
-        registerGoogleUser();
-      }
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+          registerGoogleUser();
+
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomeScreen()));
+        }
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e!.message.toString());
     }
@@ -351,18 +352,25 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
-
   ///A method to set user login details to shared preferences
   ///Sets value of isChecked
   void rememberLoginDetails(bool? value) {
     isChecked = value!;
 
-    SharedPreferences.getInstance().then((preference) {
-      preference.setBool("checkBox", value);
-      preference.setString("email", emailController.text);
-      preference.setString("password", passwordController.text);
-    });
+    if (isChecked == true) {
+      SharedPreferences.getInstance().then((preference) {
+        preference.setBool("checkBox", value);
+        preference.setString("email", emailController.text);
+        preference.setString("password", passwordController.text);
+      });
+
+    } else {
+      SharedPreferences.getInstance().then((preference) {
+        preference.clear();
+      });
+    }
+
+
 
     setState(() {
       isChecked = value;
@@ -376,11 +384,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     var checkBox = preferences.getBool("checkBox");
 
-    if (checkBox!) {
+    if (checkBox != null) {
       setState(() {
+        isChecked = true;
         emailController.text = preferences.getString("email").toString();
         passwordController.text = preferences.getString("password").toString();
-        isChecked = true;
+
       });
     }
   }
