@@ -1,14 +1,8 @@
 # Educational App for GCSE Maths
 
-A new Flutter Project for the development of MSc Software Engineering's final year project
-
-## Getting Started
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This repository contains the development of my MSc Software Engineering's final year project. 
+The application is developed in Flutter and incorporates Realistic Mathematics Education.
+Directory Structure: 
+-  lib: Contains all development directories of widgets and screen
+-  test: Contains widget tests 
+-  apk: Contains APK of the application 
